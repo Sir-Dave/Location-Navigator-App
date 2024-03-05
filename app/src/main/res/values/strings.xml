@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Campus Navigator</string>
+    <string name="search_label">Where are you going?</string>
+    <string name="search_placeholder">Search places in UI</string>
 </resources>

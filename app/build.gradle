@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace 'com.sirdave.campusnavigator'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.sirdave.campusnavigator"
@@ -60,6 +60,9 @@ dependencies {
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
+
+    implementation "androidx.constraintlayout:constraintlayout:2.2.0-alpha13"
+    implementation "androidx.constraintlayout:constraintlayout-compose:1.1.0-alpha13"
 
     def nav_version = "2.5.3"
     implementation "androidx.navigation:navigation-compose:$nav_version"

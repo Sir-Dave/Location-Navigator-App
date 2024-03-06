@@ -2,4 +2,8 @@
     <string name="app_name">Campus Navigator</string>
     <string name="search_label">Where are you going?</string>
     <string name="search_placeholder">Search places in UI</string>
+    <string name="placeholder_place_name">KDLT - Kola Daisi Lecture Theatre, Computer Science department, University of Ibadan</string>
+    <string name="how_to_get_there">How to get there</string>
+    <string name="direct_me">Direct me</string>
+
 </resources>

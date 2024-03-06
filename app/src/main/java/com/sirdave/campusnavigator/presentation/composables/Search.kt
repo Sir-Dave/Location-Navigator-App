@@ -1,8 +1,6 @@
 package com.sirdave.campusnavigator.presentation.composables
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
@@ -21,7 +19,9 @@ fun Search(modifier: Modifier = Modifier){
     Column {
         Text(
             text = stringResource(id = R.string.search_label),
-            modifier = modifier.padding(horizontal = 8.dp, vertical = 4.dp),
+            modifier = modifier
+                .padding(horizontal = 8.dp, vertical = 4.dp)
+                .fillMaxWidth(),
             fontWeight = FontWeight.Bold
         )
         OutlinedTextField(
@@ -36,8 +36,11 @@ fun Search(modifier: Modifier = Modifier){
             label = {
                 Text(text = stringResource(id = R.string.search_placeholder))
             },
-            modifier = modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+            modifier = modifier
+                .padding(horizontal = 8.dp, vertical = 4.dp)
+                .fillMaxWidth()
         )
+        Spacer(modifier = modifier.height(50.dp))
         
     }
     

@@ -78,6 +78,7 @@ class MainActivity : ComponentActivity() {
                 ){ innerPadding ->
                     Navigation(
                         navHostController = navController,
+                        innerPadding,
                         modifier = Modifier.padding(innerPadding))
                 }
             }

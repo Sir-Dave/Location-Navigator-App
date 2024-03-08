@@ -19,7 +19,10 @@ import com.sirdave.campusnavigator.presentation.composables.PopularPlace
 import com.sirdave.campusnavigator.presentation.composables.SegmentedPlace
 
 @Composable
-fun ExploreScreen(modifier: Modifier = Modifier){
+fun ExploreScreen(
+    onNavigateToDetails: () -> Unit,
+    modifier: Modifier = Modifier,
+){
     Column(modifier = modifier.padding(horizontal = 8.dp)) {
         Text(
             text = stringResource(id = R.string.explore),
@@ -61,7 +64,10 @@ fun ExploreScreen(modifier: Modifier = Modifier){
 
         Spacer(modifier = modifier.width(16.dp))
 
-        SegmentedPlace(title = stringResource(id = R.string.halls_of_residence))
+        SegmentedPlace(
+            title = stringResource(id = R.string.halls_of_residence),
+            onNavigateToDetails = onNavigateToDetails
+        )
     }
 
 }
@@ -69,5 +75,7 @@ fun ExploreScreen(modifier: Modifier = Modifier){
 @Preview(showBackground = true)
 @Composable
 fun ExplorePreview() {
-    ExploreScreen()
+    ExploreScreen(
+        onNavigateToDetails = {}
+    )
 }

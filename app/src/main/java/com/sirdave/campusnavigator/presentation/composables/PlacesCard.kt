@@ -1,5 +1,6 @@
 package com.sirdave.campusnavigator.presentation.composables
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Icon
@@ -111,7 +112,11 @@ fun PlaceCard(modifier: Modifier = Modifier){
 
 
 @Composable
-fun SegmentedPlace(title: String, modifier: Modifier = Modifier){
+fun SegmentedPlace(
+    title: String,
+    onNavigateToDetails: () -> Unit,
+    modifier: Modifier = Modifier
+){
     Column(modifier = modifier.padding(8.dp)) {
 
         Row(
@@ -125,7 +130,10 @@ fun SegmentedPlace(title: String, modifier: Modifier = Modifier){
                 modifier = Modifier.weight(1f)
             )
             Text(
-                text = stringResource(id = R.string.see_all)
+                text = stringResource(id = R.string.see_all),
+                modifier = modifier.clickable {
+                    onNavigateToDetails()
+                }
             )
         }
 

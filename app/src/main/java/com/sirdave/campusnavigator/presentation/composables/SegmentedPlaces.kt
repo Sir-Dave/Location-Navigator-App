@@ -18,7 +18,7 @@ import com.sirdave.campusnavigator.R
 import com.sirdave.campusnavigator.domain.model.Place
 
 @Composable
-fun SegmentedPlace(
+fun SegmentedPlaces(
     places: List<Place>,
     onNavigateToDetails: (String) -> Unit,
     modifier: Modifier = Modifier

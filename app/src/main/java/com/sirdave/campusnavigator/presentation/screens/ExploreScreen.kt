@@ -19,7 +19,7 @@ import com.sirdave.campusnavigator.R
 import com.sirdave.campusnavigator.domain.model.Place
 import com.sirdave.campusnavigator.domain.model.places
 import com.sirdave.campusnavigator.presentation.composables.PopularPlace
-import com.sirdave.campusnavigator.presentation.composables.SegmentedPlace
+import com.sirdave.campusnavigator.presentation.composables.SegmentedPlaces
 
 @Composable
 fun ExploreScreen(
@@ -68,7 +68,7 @@ fun ExploreScreen(
 
         Spacer(modifier = modifier.height(16.dp))
 
-        SegmentedPlace(
+        SegmentedPlaces(
             places = places,
             onNavigateToDetails = onNavigateToDetails
         )

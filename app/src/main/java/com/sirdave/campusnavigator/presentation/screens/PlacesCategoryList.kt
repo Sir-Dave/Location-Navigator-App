@@ -22,7 +22,7 @@ import com.sirdave.campusnavigator.domain.model.places
 import com.sirdave.campusnavigator.presentation.composables.PlaceCard
 
 @Composable
-fun PlaceDetail(
+fun PlaceCategoryList(
     places: List<Place>,
     title: String,
     onBackClick: () -> Unit,
@@ -57,7 +57,7 @@ fun PlaceDetail(
 @Preview(showBackground = true)
 @Composable
 fun PlaceDetailPreview(){
-    PlaceDetail(
+    PlaceCategoryList(
         places = places,
         title = stringResource(id = R.string.halls_of_residence),
         onBackClick = {}

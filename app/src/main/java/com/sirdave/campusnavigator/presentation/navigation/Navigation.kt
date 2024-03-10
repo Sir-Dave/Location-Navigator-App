@@ -11,7 +11,7 @@ import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.sirdave.campusnavigator.domain.model.places
 import com.sirdave.campusnavigator.presentation.screens.ExploreScreen
-import com.sirdave.campusnavigator.presentation.screens.PlaceDetail
+import com.sirdave.campusnavigator.presentation.screens.PlaceCategoryList
 import com.sirdave.campusnavigator.presentation.screens.SearchScreen
 import com.sirdave.campusnavigator.presentation.screens.UpdatesScreen
 
@@ -41,7 +41,7 @@ fun Navigation(
                 ExploreScreen(
                     places = places,
                     onNavigateToDetails = {
-                        val route = Screen.PlaceDetailScreen.route + "/$it"
+                        val route = Screen.PlacesCategoryListScreen.route + "/$it"
                         navHostController.navigate(route)
                     }
                 )
@@ -52,11 +52,11 @@ fun Navigation(
             }
             
             composable(
-                route = Screen.PlaceDetailScreen.route + "/{placeType}",
+                route = Screen.PlacesCategoryListScreen.route + "/{placeType}",
                 arguments = listOf(navArgument(PLACE_TYPE) { type = NavType.StringType })
             ){
                 val placeType = it.arguments?.getString(PLACE_TYPE)
-                PlaceDetail(
+                PlaceCategoryList(
                     places = groupedPlaces[placeType] ?: emptyList(),
                     title = placeType ?: "",
                     onBackClick = {

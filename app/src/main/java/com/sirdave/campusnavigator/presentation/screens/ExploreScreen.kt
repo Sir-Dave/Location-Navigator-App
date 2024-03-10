@@ -2,6 +2,7 @@ package com.sirdave.campusnavigator.presentation.screens
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
@@ -15,12 +16,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sirdave.campusnavigator.R
+import com.sirdave.campusnavigator.domain.model.Place
+import com.sirdave.campusnavigator.domain.model.places
 import com.sirdave.campusnavigator.presentation.composables.PopularPlace
 import com.sirdave.campusnavigator.presentation.composables.SegmentedPlace
 
 @Composable
 fun ExploreScreen(
-    onNavigateToDetails: () -> Unit,
+    places: List<Place>,
+    onNavigateToDetails: (String) -> Unit,
     modifier: Modifier = Modifier,
 ){
     Column(modifier = modifier.padding(horizontal = 8.dp)) {
@@ -57,15 +61,15 @@ fun ExploreScreen(
         )
 
         LazyRow(modifier = modifier){
-            items(5){
-                PopularPlace()
+            items(places.subList(0, 5)){ place ->
+                PopularPlace(place = place)
             }
         }
 
         Spacer(modifier = modifier.width(16.dp))
 
         SegmentedPlace(
-            title = stringResource(id = R.string.halls_of_residence),
+            places = places,
             onNavigateToDetails = onNavigateToDetails
         )
     }
@@ -76,6 +80,7 @@ fun ExploreScreen(
 @Composable
 fun ExplorePreview() {
     ExploreScreen(
+        places = places,
         onNavigateToDetails = {}
     )
 }

@@ -3,16 +3,19 @@ package com.sirdave.campusnavigator.presentation.navigation
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import androidx.navigation.navigation
-import com.sirdave.campusnavigator.R
+import com.sirdave.campusnavigator.domain.model.places
 import com.sirdave.campusnavigator.presentation.screens.ExploreScreen
 import com.sirdave.campusnavigator.presentation.screens.PlaceDetail
 import com.sirdave.campusnavigator.presentation.screens.SearchScreen
 import com.sirdave.campusnavigator.presentation.screens.UpdatesScreen
+
+private const val PLACE_TYPE = "placeType"
 
 @Composable
 fun Navigation(
@@ -20,7 +23,7 @@ fun Navigation(
     padding: PaddingValues,
     modifier: Modifier = Modifier
 ){
-
+    val groupedPlaces = places.groupBy { it.placeType }
     NavHost(
         navController = navHostController,
         startDestination = Screen.HomeScreen.route,
@@ -35,18 +38,27 @@ fun Navigation(
             }
 
             composable(Screen.ExploreScreen.route){
-                ExploreScreen(onNavigateToDetails = {
-                    navHostController.navigate(Screen.PlaceDetailScreen.route)
-                })
+                ExploreScreen(
+                    places = places,
+                    onNavigateToDetails = {
+                        val route = Screen.PlaceDetailScreen.route + "/$it"
+                        navHostController.navigate(route)
+                    }
+                )
             }
 
             composable(Screen.UpdatesScreen.route){
                 UpdatesScreen()
             }
             
-            composable(Screen.PlaceDetailScreen.route){
+            composable(
+                route = Screen.PlaceDetailScreen.route + "/{placeType}",
+                arguments = listOf(navArgument(PLACE_TYPE) { type = NavType.StringType })
+            ){
+                val placeType = it.arguments?.getString(PLACE_TYPE)
                 PlaceDetail(
-                    title = stringResource(id = R.string.halls_of_residence),
+                    places = groupedPlaces[placeType] ?: emptyList(),
+                    title = placeType ?: "",
                     onBackClick = {
                         navHostController.popBackStack()
                     }

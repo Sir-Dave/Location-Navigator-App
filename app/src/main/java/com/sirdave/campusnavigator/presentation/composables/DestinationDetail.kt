@@ -14,13 +14,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.sirdave.campusnavigator.R
+import com.sirdave.campusnavigator.domain.model.Place
+import com.sirdave.campusnavigator.domain.model.places
 
 @Composable
-fun DestinationDetail(modifier: Modifier = Modifier){
+fun DestinationDetail(
+    place: Place,
+    modifier: Modifier = Modifier
+){
     Column(modifier = modifier.padding(8.dp)) {
         LazyRow(modifier = modifier){
             items(5){
-                ImageCard()
+                ImageCard(place = place)
             }
         }
 
@@ -98,7 +103,7 @@ fun DestinationDetail(modifier: Modifier = Modifier){
                         painter = painterResource(id = R.drawable.baseline_menu),
                         contentDescription = null,
                     )
-                    Spacer(modifier = modifier.width(8.dp))
+                    Spacer(modifier = modifier.width(4.dp))
                     Text(
                         text = stringResource(id = R.string.how_to_get_there),
                         fontSize = 15.sp
@@ -123,7 +128,7 @@ fun DestinationDetail(modifier: Modifier = Modifier){
                         contentDescription = null,
                     )
 
-                    Spacer(modifier = modifier.width(8.dp))
+                    Spacer(modifier = modifier.width(4.dp))
 
                     Text(
                         text = stringResource(id = R.string.direct_me),
@@ -141,5 +146,5 @@ fun DestinationDetail(modifier: Modifier = Modifier){
 @Preview(showBackground = true)
 @Composable
 fun DetailPreview() {
-    DestinationDetail()
+    DestinationDetail(place = places[0])
 }

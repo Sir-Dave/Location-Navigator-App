@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Icon
@@ -16,10 +17,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sirdave.campusnavigator.R
+import com.sirdave.campusnavigator.domain.model.Place
+import com.sirdave.campusnavigator.domain.model.places
 import com.sirdave.campusnavigator.presentation.composables.PlaceCard
 
 @Composable
 fun PlaceDetail(
+    places: List<Place>,
     title: String,
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier) {
@@ -28,7 +32,9 @@ fun PlaceDetail(
         Icon(
             imageVector = Icons.Default.ArrowBack,
             contentDescription = null,
-            modifier = modifier.padding(vertical = 16.dp).clickable { onBackClick() }
+            modifier = modifier
+                .padding(vertical = 16.dp)
+                .clickable { onBackClick() }
         )
 
         Text(
@@ -39,8 +45,8 @@ fun PlaceDetail(
         )
 
         LazyColumn(modifier = modifier){
-            items(10){
-                PlaceCard()
+            items(places){place ->
+                PlaceCard(place = place)
             }
         }
         
@@ -52,7 +58,8 @@ fun PlaceDetail(
 @Composable
 fun PlaceDetailPreview(){
     PlaceDetail(
-        stringResource(id = R.string.halls_of_residence),
+        places = places,
+        title = stringResource(id = R.string.halls_of_residence),
         onBackClick = {}
     )
 }

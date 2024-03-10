@@ -48,7 +48,7 @@ fun ExploreScreen(
                 Text(text = stringResource(id = R.string.search))
             },
             modifier = modifier
-                .padding(horizontal = 8.dp, vertical = 4.dp)
+                .padding(vertical = 4.dp)
                 .fillMaxWidth()
         )
 
@@ -57,7 +57,7 @@ fun ExploreScreen(
         Text(
             text = stringResource(id = R.string.popular_places),
             style = MaterialTheme.typography.titleMedium,
-            modifier = modifier.padding(horizontal = 8.dp, vertical = 8.dp)
+            modifier = modifier.padding(vertical = 8.dp)
         )
 
         LazyRow(modifier = modifier){
@@ -66,7 +66,7 @@ fun ExploreScreen(
             }
         }
 
-        Spacer(modifier = modifier.width(16.dp))
+        Spacer(modifier = modifier.height(16.dp))
 
         SegmentedPlace(
             places = places,

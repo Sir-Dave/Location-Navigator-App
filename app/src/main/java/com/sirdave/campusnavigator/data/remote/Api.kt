@@ -3,6 +3,7 @@ package com.sirdave.campusnavigator.data.remote
 import com.sirdave.campusnavigator.data.remote.dto.response.PlaceDto
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 
@@ -24,6 +25,11 @@ interface Api {
 
     @GET("api/v1/places")
     suspend fun getAllPlaces(): Response<List<PlaceDto>>
+
+    @GET("api/v1/places/{id}")
+    suspend fun findPlaceById(
+        @Path("id") id: Long
+    ): Response<PlaceDto>
 
 
 }

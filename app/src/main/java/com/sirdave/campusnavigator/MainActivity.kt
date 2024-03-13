@@ -19,7 +19,9 @@ import com.sirdave.campusnavigator.presentation.composables.BottomNavigationBar
 import com.sirdave.campusnavigator.presentation.navigation.Navigation
 import com.sirdave.campusnavigator.presentation.navigation.Screen
 import com.sirdave.campusnavigator.ui.theme.CampusNavigatorTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

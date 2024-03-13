@@ -9,8 +9,9 @@ import com.sirdave.campusnavigator.util.Resource
 import com.sirdave.campusnavigator.util.apiRequestFlow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-class PlaceRepositoryImpl constructor(
+class PlaceRepositoryImpl @Inject constructor(
     private val context: Context,
     private val api: Api
 ): PlaceRepository {

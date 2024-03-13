@@ -26,7 +26,7 @@ data class Place (
     var latitude: Double,
     var placeType: String,
     var createdAt: LocalDateTime,
-    var imageUrls: MutableList<String>,
+    var imageUrls: List<String>,
     var category: String?,
     var updatedAt: LocalDateTime?
 )

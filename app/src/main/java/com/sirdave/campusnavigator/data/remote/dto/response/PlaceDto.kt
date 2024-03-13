@@ -7,8 +7,8 @@ data class PlaceDto(
     var longitude: Double,
     var latitude: Double,
     var placeType: String,
-    var category: String,
+    var category: String?,
     var imageUrls: List<String>,
     var createdAt: String,
-    var updatedAt: String
+    var updatedAt: String?
 )

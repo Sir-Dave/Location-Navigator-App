@@ -5,6 +5,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -14,14 +15,21 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.sirdave.campusnavigator.R
-import com.sirdave.campusnavigator.domain.model.Place
-import com.sirdave.campusnavigator.domain.model.places
+import com.sirdave.campusnavigator.presentation.places.PlaceEvent
+import com.sirdave.campusnavigator.presentation.places.PlaceState
 
 @Composable
 fun DestinationDetail(
-    place: Place,
+    state: PlaceState,
+    onEvent: (PlaceEvent) -> Unit,
     modifier: Modifier = Modifier
 ){
+    val place = state.currentPlace!!
+
+    LaunchedEffect(Unit){
+        onEvent(PlaceEvent.GetCurrentPlace(1))
+    }
+
     Column(modifier = modifier.padding(8.dp)) {
         LazyRow(modifier = modifier){
             items(5){
@@ -30,7 +38,7 @@ fun DestinationDetail(
         }
 
         Text(
-            text = stringResource(id = R.string.placeholder_place_name),
+            text = "${place.alias} - ${place.name}",
             style = MaterialTheme.typography.titleMedium,
             maxLines = 3
         )
@@ -71,7 +79,7 @@ fun DestinationDetail(
                     }
                 )
                 Text(
-                    text = "Lecture Theatre",
+                    text = place.placeType,
                     modifier = modifier.constrainAs(directionText){
                         bottom.linkTo(parent.bottom)
                         start.linkTo(directionIcon.end)
@@ -146,5 +154,8 @@ fun DestinationDetail(
 @Preview(showBackground = true)
 @Composable
 fun DetailPreview() {
-    DestinationDetail(place = places[0])
+    DestinationDetail(
+        state = PlaceState(),
+        onEvent = {}
+    )
 }

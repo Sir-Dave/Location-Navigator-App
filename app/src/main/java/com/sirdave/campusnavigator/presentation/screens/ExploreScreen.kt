@@ -10,23 +10,31 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sirdave.campusnavigator.R
-import com.sirdave.campusnavigator.domain.model.Place
-import com.sirdave.campusnavigator.domain.model.places
 import com.sirdave.campusnavigator.presentation.composables.PopularPlace
 import com.sirdave.campusnavigator.presentation.composables.SegmentedPlaces
+import com.sirdave.campusnavigator.presentation.places.PlaceEvent
+import com.sirdave.campusnavigator.presentation.places.PlaceState
 
 @Composable
 fun ExploreScreen(
-    places: List<Place>,
+    state: PlaceState,
     onNavigateToDetails: (String) -> Unit,
+    onEvent: (PlaceEvent) -> Unit,
     modifier: Modifier = Modifier,
 ){
+    val places = state.allPlaces
+
+    LaunchedEffect(Unit){
+        onEvent(PlaceEvent.GetAllPlaces)
+    }
+
     Column(modifier = modifier.padding(horizontal = 8.dp)) {
         Text(
             text = stringResource(id = R.string.explore),
@@ -80,7 +88,8 @@ fun ExploreScreen(
 @Composable
 fun ExplorePreview() {
     ExploreScreen(
-        places = places,
-        onNavigateToDetails = {}
+        state = PlaceState(),
+        onNavigateToDetails = {},
+        onEvent = {}
     )
 }

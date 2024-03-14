@@ -3,13 +3,14 @@ package com.sirdave.campusnavigator.presentation.navigation
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
-import com.sirdave.campusnavigator.domain.model.places
+import com.sirdave.campusnavigator.presentation.places.PlaceViewModel
 import com.sirdave.campusnavigator.presentation.screens.ExploreScreen
 import com.sirdave.campusnavigator.presentation.screens.PlaceCategoryList
 import com.sirdave.campusnavigator.presentation.screens.SearchScreen
@@ -23,7 +24,7 @@ fun Navigation(
     padding: PaddingValues,
     modifier: Modifier = Modifier
 ){
-    val groupedPlaces = places.groupBy { it.placeType }
+    val viewModel = hiltViewModel<PlaceViewModel>()
     NavHost(
         navController = navHostController,
         startDestination = Screen.HomeScreen.route,
@@ -39,11 +40,12 @@ fun Navigation(
 
             composable(Screen.ExploreScreen.route){
                 ExploreScreen(
-                    places = places,
+                    state = viewModel.placeState.value,
                     onNavigateToDetails = {
                         val route = Screen.PlacesCategoryListScreen.route + "/$it"
                         navHostController.navigate(route)
-                    }
+                    },
+                    onEvent = viewModel::onEvent,
                 )
             }
 
@@ -56,12 +58,14 @@ fun Navigation(
                 arguments = listOf(navArgument(PLACE_TYPE) { type = NavType.StringType })
             ){
                 val placeType = it.arguments?.getString(PLACE_TYPE)
+
                 PlaceCategoryList(
-                    places = groupedPlaces[placeType] ?: emptyList(),
+                    state = viewModel.placeState.value,
                     title = placeType ?: "",
                     onBackClick = {
                         navHostController.popBackStack()
-                    }
+                    },
+                    onEvent = viewModel::onEvent
                 )
             }
         }

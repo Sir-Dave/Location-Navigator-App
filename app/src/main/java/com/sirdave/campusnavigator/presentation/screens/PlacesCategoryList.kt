@@ -11,24 +11,32 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sirdave.campusnavigator.R
-import com.sirdave.campusnavigator.domain.model.Place
-import com.sirdave.campusnavigator.domain.model.places
 import com.sirdave.campusnavigator.presentation.composables.PlaceCard
+import com.sirdave.campusnavigator.presentation.places.PlaceEvent
+import com.sirdave.campusnavigator.presentation.places.PlaceState
 
 @Composable
 fun PlaceCategoryList(
-    places: List<Place>,
+    state: PlaceState,
     title: String,
     onBackClick: () -> Unit,
+    onEvent: (PlaceEvent) -> Unit,
     modifier: Modifier = Modifier) {
-    Column {
 
+    val places = state.allPlaces
+
+    LaunchedEffect(Unit){
+        onEvent(PlaceEvent.SearchPlacesByType(title))
+    }
+
+    Column {
         Icon(
             imageVector = Icons.Default.ArrowBack,
             contentDescription = null,
@@ -58,8 +66,9 @@ fun PlaceCategoryList(
 @Composable
 fun PlaceDetailPreview(){
     PlaceCategoryList(
-        places = places,
+        state = PlaceState(),
         title = stringResource(id = R.string.halls_of_residence),
+        onEvent = {},
         onBackClick = {}
     )
 }

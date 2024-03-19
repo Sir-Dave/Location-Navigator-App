@@ -22,6 +22,7 @@ import com.sirdave.campusnavigator.presentation.places.PlaceState
 fun DestinationDetail(
     state: PlaceState,
     onEvent: (PlaceEvent) -> Unit,
+    onViewFullScreen: () -> Unit,
     modifier: Modifier = Modifier
 ){
     val place = state.currentPlace!!
@@ -33,7 +34,10 @@ fun DestinationDetail(
     Column(modifier = modifier.padding(8.dp)) {
         LazyRow(modifier = modifier){
             items(5){
-                ImageCard(place = place)
+                ImageCard(
+                    place = place,
+                    onViewFullScreen = onViewFullScreen
+                )
             }
         }
 
@@ -156,6 +160,7 @@ fun DestinationDetail(
 fun DetailPreview() {
     DestinationDetail(
         state = PlaceState(),
-        onEvent = {}
+        onEvent = {},
+        onViewFullScreen = {}
     )
 }

@@ -6,4 +6,6 @@ sealed class Screen(val route: String){
     object ExploreScreen: Screen("explore")
     object UpdatesScreen: Screen("update")
     object PlacesCategoryListScreen: Screen("places_category_list")
+
+    object DestinationPicturesExpandedScreen: Screen("destination_pictures_expanded")
 }

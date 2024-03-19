@@ -27,6 +27,7 @@ fun ExploreScreen(
     state: PlaceState,
     onNavigateToDetails: (String) -> Unit,
     onEvent: (PlaceEvent) -> Unit,
+    onViewFullScreen: () -> Unit,
     modifier: Modifier = Modifier,
 ){
     val places = state.allPlaces
@@ -70,7 +71,10 @@ fun ExploreScreen(
 
         LazyRow(modifier = modifier){
             items(places){ place ->
-                PopularPlace(place = place)
+                PopularPlace(
+                    place = place,
+                    onViewFullScreen = onViewFullScreen
+                )
             }
         }
 
@@ -90,6 +94,7 @@ fun ExplorePreview() {
     ExploreScreen(
         state = PlaceState(),
         onNavigateToDetails = {},
-        onEvent = {}
+        onEvent = {},
+        onViewFullScreen = {}
     )
 }

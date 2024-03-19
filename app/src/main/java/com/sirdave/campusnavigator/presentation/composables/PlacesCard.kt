@@ -21,12 +21,16 @@ import com.sirdave.campusnavigator.domain.model.places
 @Composable
 fun PopularPlace(
     place: Place,
+    onViewFullScreen: () -> Unit,
     modifier: Modifier = Modifier
 ){
     Column(modifier = modifier
         .padding(8.dp)
         .width(IntrinsicSize.Min)) {
-        ImageCard(place = place)
+        ImageCard(
+            place = place,
+            onViewFullScreen = onViewFullScreen
+        )
 
         Text(
             text = place.alias,
@@ -120,7 +124,7 @@ fun PlaceCard(
 @Preview(showBackground = true)
 @Composable
 fun PlacesPreview() {
-    PopularPlace(place = places[0])
+    PopularPlace(place = places[0], onViewFullScreen = {})
 }
 
 @RequiresApi(Build.VERSION_CODES.O)

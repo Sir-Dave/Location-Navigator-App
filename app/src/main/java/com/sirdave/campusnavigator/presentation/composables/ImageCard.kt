@@ -1,5 +1,6 @@
 package com.sirdave.campusnavigator.presentation.composables
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedCard
@@ -17,6 +18,7 @@ import com.sirdave.campusnavigator.domain.model.Place
 @Composable
 fun ImageCard(
     place: Place,
+    onViewFullScreen: () -> Unit,
     modifier: Modifier = Modifier
 ){
     OutlinedCard(
@@ -36,8 +38,10 @@ fun ImageCard(
             Icon(
                 painter = painterResource(id = R.drawable.baseline_zoom_out_map),
                 contentDescription = null,
-                modifier = modifier.align(Alignment.BottomEnd).padding(end = 8.dp, bottom = 8.dp),
-                tint = Color.White
+                tint = Color.White,
+                modifier = modifier.align(Alignment.BottomEnd)
+                    .padding(end = 8.dp, bottom = 8.dp)
+                    .clickable { onViewFullScreen() },
             )
         }
 

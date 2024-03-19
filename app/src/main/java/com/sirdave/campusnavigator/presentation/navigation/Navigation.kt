@@ -10,6 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
+import com.sirdave.campusnavigator.presentation.composables.DestinationPictureExpanded
 import com.sirdave.campusnavigator.presentation.places.PlaceViewModel
 import com.sirdave.campusnavigator.presentation.screens.ExploreScreen
 import com.sirdave.campusnavigator.presentation.screens.PlaceCategoryList
@@ -46,6 +47,9 @@ fun Navigation(
                         navHostController.navigate(route)
                     },
                     onEvent = viewModel::onEvent,
+                    onViewFullScreen = {
+                        navHostController.navigate(Screen.DestinationPicturesExpandedScreen.route)
+                    }
                 )
             }
 
@@ -67,6 +71,10 @@ fun Navigation(
                     },
                     onEvent = viewModel::onEvent
                 )
+            }
+
+            composable(Screen.DestinationPicturesExpandedScreen.route){
+                DestinationPictureExpanded(6)
             }
         }
     }

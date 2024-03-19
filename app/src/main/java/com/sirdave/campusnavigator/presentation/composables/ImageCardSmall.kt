@@ -25,8 +25,9 @@ fun ImageCardSmall(
         modifier = modifier.size(85.dp),
     ) {
         Box(modifier = modifier.fillMaxSize()){
+            val images = place.imageUrls
             AsyncImage(
-                model = place.imageUrls[0],
+                model = if (images.isNotEmpty()) images[0] else "",
                 placeholder = painterResource(id = R.drawable.fc4_self_massage),
                 error = painterResource(id = R.drawable.fc4_self_massage),
                 contentDescription = null,

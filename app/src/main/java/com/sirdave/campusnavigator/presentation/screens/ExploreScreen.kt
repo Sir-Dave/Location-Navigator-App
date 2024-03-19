@@ -69,7 +69,7 @@ fun ExploreScreen(
         )
 
         LazyRow(modifier = modifier){
-            items(places.subList(0, 5)){ place ->
+            items(places){ place ->
                 PopularPlace(place = place)
             }
         }

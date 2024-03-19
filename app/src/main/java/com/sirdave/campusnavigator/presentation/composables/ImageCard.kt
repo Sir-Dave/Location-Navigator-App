@@ -23,8 +23,9 @@ fun ImageCard(
         modifier = modifier.height(IntrinsicSize.Min).width(IntrinsicSize.Min),
     ) {
         Box(modifier = modifier.fillMaxSize()){
+            val images = place.imageUrls
             AsyncImage(
-                model = place.imageUrls[0],
+                model = if (images.isNotEmpty()) images[0] else "",
                 placeholder = painterResource(id = R.drawable.ab3_stretching),
                 error = painterResource(id = R.drawable.ab3_stretching),
                 contentDescription = null,

@@ -87,4 +87,8 @@ dependencies {
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
     kapt "androidx.hilt:hilt-compiler:1.0.0"
     implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
+
+    //OSM
+    def osm_version = "6.1.14"
+    implementation "org.osmdroid:osmdroid-android:$osm_version"
 }

@@ -1,8 +1,11 @@
 package com.sirdave.campusnavigator.presentation.composables
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -21,12 +24,20 @@ import com.sirdave.campusnavigator.domain.model.places
 fun DestinationDetail(
     place: Place,
     onViewFullScreen: () -> Unit,
+    onBackClicked: () -> Unit,
     modifier: Modifier = Modifier
 ){
-
     Column(
         modifier = modifier.padding(8.dp)
     ) {
+        Icon(
+            imageVector = Icons.Default.ArrowBack,
+            contentDescription = null,
+            modifier = modifier.clickable { onBackClicked() }
+        )
+        
+        Spacer(modifier = modifier.height(16.dp))
+
         LazyRow(modifier = modifier){
             items(5){
                 ImageCard(
@@ -156,6 +167,7 @@ fun DestinationDetail(
 fun DetailPreview() {
     DestinationDetail(
         place = places[0],
-        onViewFullScreen = {}
+        onViewFullScreen = {},
+        onBackClicked = {}
     )
 }

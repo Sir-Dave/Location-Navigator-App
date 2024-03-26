@@ -60,6 +60,9 @@ fun SearchScreen(
                             DestinationDetail(
                                 place = it,
                                 onViewFullScreen = onViewFullScreen,
+                                onBackClicked = {
+                                    currentScreen = BottomSheetContent.Search
+                                }
                             )
                         }
                     }

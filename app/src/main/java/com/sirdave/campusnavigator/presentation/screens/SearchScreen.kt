@@ -31,6 +31,7 @@ fun SearchScreen(
     state: PlaceState,
     padding: PaddingValues,
     onEvent: (PlaceEvent) -> Unit,
+    onViewFullScreen: () -> Unit
 ){
     var currentScreen by remember { mutableStateOf(BottomSheetContent.Search) }
     val scaffoldSheetState = rememberBottomSheetScaffoldState()
@@ -58,7 +59,7 @@ fun SearchScreen(
                         selectedPlace?.let {
                             DestinationDetail(
                                 place = it,
-                                onViewFullScreen = { /*TODO*/ },
+                                onViewFullScreen = onViewFullScreen,
                             )
                         }
                     }

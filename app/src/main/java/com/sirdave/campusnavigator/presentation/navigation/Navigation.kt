@@ -39,7 +39,10 @@ fun Navigation(
                 SearchScreen(
                     state = viewModel.placeState,
                     padding = padding,
-                    onEvent = viewModel::onEvent
+                    onEvent = viewModel::onEvent,
+                    onViewFullScreen = {
+                        navHostController.navigate(Screen.DestinationPicturesExpandedScreen.route)
+                    }
                 )
             }
 

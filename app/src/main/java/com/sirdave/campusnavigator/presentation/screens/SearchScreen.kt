@@ -12,6 +12,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.sirdave.campusnavigator.R
+import com.sirdave.campusnavigator.domain.model.Place
+import com.sirdave.campusnavigator.domain.model.places
+import com.sirdave.campusnavigator.presentation.composables.DestinationDetail
 import com.sirdave.campusnavigator.presentation.composables.Search
 import com.sirdave.campusnavigator.presentation.places.PlaceEvent
 import com.sirdave.campusnavigator.presentation.places.PlaceState
@@ -29,18 +32,38 @@ fun SearchScreen(
     padding: PaddingValues,
     onEvent: (PlaceEvent) -> Unit,
 ){
+    var currentScreen by remember { mutableStateOf(BottomSheetContent.Search) }
     val scaffoldSheetState = rememberBottomSheetScaffoldState()
     val bottomPadding = padding.calculateBottomPadding() + 40.dp
+
+    var selectedPlace by remember { mutableStateOf<Place?>(null) }
 
     BottomSheetScaffold(
         scaffoldState = scaffoldSheetState,
         sheetPeekHeight = bottomPadding,
         modifier = Modifier.padding(padding),
         sheetContent = {
-            Search(
-                state = state,
-                onEvent = onEvent
-            )
+            when (currentScreen){
+                BottomSheetContent.Search ->
+                    Search(
+                        state = state, 
+                        onEvent = onEvent,
+                        onViewDetails = { place ->
+                            currentScreen = BottomSheetContent.Detail
+                            selectedPlace = place
+                        }
+                    )
+                
+                    BottomSheetContent.Detail -> {
+                        selectedPlace?.let {
+                            DestinationDetail(
+                                place = it,
+                                onViewFullScreen = { /*TODO*/ },
+                            )
+                        }
+                    }
+            }
+            
         },
     ){
         Column(
@@ -102,3 +125,7 @@ private fun getSharedPreferences(context: Context) =
 
 
 suspend fun runOnUiThread(block: suspend () -> Unit) = withContext(Dispatchers.Main) { block() }
+
+enum class BottomSheetContent{
+    Search, Detail
+}

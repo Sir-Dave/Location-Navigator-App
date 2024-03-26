@@ -15,6 +15,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sirdave.campusnavigator.R
+import com.sirdave.campusnavigator.domain.model.Place
 import com.sirdave.campusnavigator.presentation.places.PlaceEvent
 import com.sirdave.campusnavigator.presentation.places.PlaceState
 
@@ -22,6 +23,7 @@ import com.sirdave.campusnavigator.presentation.places.PlaceState
 fun Search(
     state: PlaceState,
     onEvent: (PlaceEvent) -> Unit,
+    onViewDetails: (Place) -> Unit,
     modifier: Modifier = Modifier
 ){
     Column {
@@ -54,7 +56,7 @@ fun Search(
             items(state.allPlaces){ place ->
                 SearchPlaceItem(
                     place = place,
-                    onViewDetails = {}
+                    onViewDetails = onViewDetails
                 )
             }
         }
@@ -69,6 +71,7 @@ fun Search(
 fun SearchPreview() {
     Search(
         state = PlaceState(),
-        onEvent = {}
+        onEvent = {},
+        onViewDetails = {}
     )
 }

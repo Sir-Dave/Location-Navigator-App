@@ -5,7 +5,6 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -15,34 +14,31 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.sirdave.campusnavigator.R
-import com.sirdave.campusnavigator.presentation.places.PlaceEvent
-import com.sirdave.campusnavigator.presentation.places.PlaceState
+import com.sirdave.campusnavigator.domain.model.Place
+import com.sirdave.campusnavigator.domain.model.places
 
 @Composable
 fun DestinationDetail(
-    state: PlaceState,
-    onEvent: (PlaceEvent) -> Unit,
+    place: Place,
     onViewFullScreen: () -> Unit,
     modifier: Modifier = Modifier
 ){
-    val place = state.currentPlace!!
 
-    LaunchedEffect(Unit){
-        onEvent(PlaceEvent.GetCurrentPlace(1))
-    }
-
-    Column(modifier = modifier.padding(8.dp)) {
+    Column(
+        modifier = modifier.padding(8.dp)
+    ) {
         LazyRow(modifier = modifier){
             items(5){
                 ImageCard(
                     place = place,
-                    onViewFullScreen = onViewFullScreen
+                    onViewFullScreen = onViewFullScreen,
                 )
+                Spacer(modifier = modifier.width(8.dp))
             }
         }
 
         Text(
-            text = "${place.alias} - ${place.name}",
+            text = place.name,
             style = MaterialTheme.typography.titleMedium,
             maxLines = 3
         )
@@ -159,8 +155,7 @@ fun DestinationDetail(
 @Composable
 fun DetailPreview() {
     DestinationDetail(
-        state = PlaceState(),
-        onEvent = {},
+        place = places[0],
         onViewFullScreen = {}
     )
 }

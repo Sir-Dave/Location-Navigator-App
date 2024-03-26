@@ -36,12 +36,16 @@ fun Navigation(
             startDestination = Screen.SearchScreen.route
         ){
             composable(Screen.SearchScreen.route){
-                SearchScreen(padding)
+                SearchScreen(
+                    state = viewModel.placeState,
+                    padding = padding,
+                    onEvent = viewModel::onEvent
+                )
             }
 
             composable(Screen.ExploreScreen.route){
                 ExploreScreen(
-                    state = viewModel.placeState.value,
+                    state = viewModel.placeState,
                     onNavigateToDetails = {
                         val route = Screen.PlacesCategoryListScreen.route + "/$it"
                         navHostController.navigate(route)
@@ -64,7 +68,7 @@ fun Navigation(
                 val placeType = it.arguments?.getString(PLACE_TYPE)
 
                 PlaceCategoryList(
-                    state = viewModel.placeState.value,
+                    state = viewModel.placeState,
                     title = placeType ?: "",
                     onBackClick = {
                         navHostController.popBackStack()

@@ -1,6 +1,8 @@
 package com.sirdave.campusnavigator.presentation.composables
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
@@ -13,9 +15,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sirdave.campusnavigator.R
+import com.sirdave.campusnavigator.presentation.places.PlaceEvent
+import com.sirdave.campusnavigator.presentation.places.PlaceState
 
 @Composable
-fun Search(modifier: Modifier = Modifier){
+fun Search(
+    state: PlaceState,
+    onEvent: (PlaceEvent) -> Unit,
+    modifier: Modifier = Modifier
+){
     Column {
         Text(
             text = stringResource(id = R.string.search_label),
@@ -25,8 +33,8 @@ fun Search(modifier: Modifier = Modifier){
             fontWeight = FontWeight.Bold
         )
         OutlinedTextField(
-            value = "",
-            onValueChange = {},
+            value = state.searchQuery,
+            onValueChange = { onEvent(PlaceEvent.OnSearchQueryChanged(it)) },
             leadingIcon = {
                 Icon(imageVector = Icons.Default.Search, contentDescription = null)
             },
@@ -41,6 +49,15 @@ fun Search(modifier: Modifier = Modifier){
                 .fillMaxWidth()
         )
         Spacer(modifier = modifier.height(50.dp))
+
+        LazyColumn(modifier = Modifier.fillMaxSize()){
+            items(state.allPlaces){ place ->
+                SearchPlaceItem(
+                    place = place,
+                    onViewDetails = {}
+                )
+            }
+        }
         
     }
     
@@ -50,5 +67,8 @@ fun Search(modifier: Modifier = Modifier){
 @Preview(showBackground = true)
 @Composable
 fun SearchPreview() {
-    Search()
+    Search(
+        state = PlaceState(),
+        onEvent = {}
+    )
 }

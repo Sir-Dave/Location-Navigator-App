@@ -9,11 +9,12 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.sirdave.campusnavigator.R
 import com.sirdave.campusnavigator.presentation.composables.Search
+import com.sirdave.campusnavigator.presentation.places.PlaceEvent
+import com.sirdave.campusnavigator.presentation.places.PlaceState
 import kotlinx.coroutines.*
 import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
@@ -23,7 +24,11 @@ import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchScreen(padding: PaddingValues){
+fun SearchScreen(
+    state: PlaceState,
+    padding: PaddingValues,
+    onEvent: (PlaceEvent) -> Unit,
+){
     val scaffoldSheetState = rememberBottomSheetScaffoldState()
     val bottomPadding = padding.calculateBottomPadding() + 40.dp
 
@@ -32,7 +37,10 @@ fun SearchScreen(padding: PaddingValues){
         sheetPeekHeight = bottomPadding,
         modifier = Modifier.padding(padding),
         sheetContent = {
-            Search()
+            Search(
+                state = state,
+                onEvent = onEvent
+            )
         },
     ){
         Column(
@@ -65,7 +73,7 @@ fun SearchScreen(padding: PaddingValues){
                         mMyLocationOverlay.runOnFirstFix {
                             MainScope().launch {
                                 runOnUiThread {
-                                    controller.setCenter(mMyLocationOverlay.myLocation);
+                                    controller.setCenter(mMyLocationOverlay.myLocation)
                                     controller.animateTo(mMyLocationOverlay.myLocation)
                                 }
                             }

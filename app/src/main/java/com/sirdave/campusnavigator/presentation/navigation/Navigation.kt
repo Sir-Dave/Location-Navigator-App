@@ -3,6 +3,7 @@ package com.sirdave.campusnavigator.presentation.navigation
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -10,6 +11,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
+import com.sirdave.campusnavigator.R
 import com.sirdave.campusnavigator.presentation.composables.DestinationPictureExpanded
 import com.sirdave.campusnavigator.presentation.places.PlaceViewModel
 import com.sirdave.campusnavigator.presentation.screens.ExploreScreen
@@ -81,7 +83,11 @@ fun Navigation(
             }
 
             composable(Screen.DestinationPicturesExpandedScreen.route){
-                DestinationPictureExpanded(6)
+                DestinationPictureExpanded(
+                    pageCount = 6,
+                    name = stringResource(id = R.string.placeholder_place_name),
+                    onBackClicked = { navHostController.popBackStack() }
+                )
             }
         }
     }

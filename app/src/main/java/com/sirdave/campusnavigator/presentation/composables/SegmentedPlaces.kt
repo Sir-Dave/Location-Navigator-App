@@ -37,7 +37,10 @@ fun SegmentedPlaces(
                 )
             }
             items(places){ place ->
-                PlaceCard(place = place)
+                PlaceCard(
+                    place = place,
+                    imageIndex = 0
+                )
             }
         }
     }

@@ -76,10 +76,14 @@ fun PopularPlace(
 @Composable
 fun PlaceCard(
     place: Place,
+    imageIndex: Int,
     modifier: Modifier = Modifier){
     Column(modifier = modifier.padding(8.dp)) {
         Row{
-            ImageCardSmall(place = place)
+            ImageCardSmall(
+                place = place,
+                imageIndex = imageIndex
+            )
             Spacer(modifier = modifier.width(16.dp))
             Column {
                 Text(
@@ -133,5 +137,5 @@ fun PlacesPreview() {
 @Preview(showBackground = true)
 @Composable
 fun PlacesCardPreview() {
-    PlaceCard(place = places[0])
+    PlaceCard(place = places[0], 0)
 }

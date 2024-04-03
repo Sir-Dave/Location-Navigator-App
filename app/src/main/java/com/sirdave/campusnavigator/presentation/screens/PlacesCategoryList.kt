@@ -54,7 +54,10 @@ fun PlaceCategoryList(
 
         LazyColumn(modifier = modifier){
             items(places){place ->
-                PlaceCard(place = place)
+                PlaceCard(
+                    place = place,
+                    imageIndex = 0
+                )
             }
         }
         

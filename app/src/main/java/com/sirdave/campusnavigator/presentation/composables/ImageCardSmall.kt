@@ -20,6 +20,7 @@ import com.sirdave.campusnavigator.domain.model.Place
 @Composable
 fun ImageCardSmall(
     place: Place,
+    imageIndex: Int,
     modifier: Modifier = Modifier){
     OutlinedCard(
         modifier = modifier.size(85.dp),
@@ -27,7 +28,7 @@ fun ImageCardSmall(
         Box(modifier = modifier.fillMaxSize()){
             val images = place.imageUrls
             AsyncImage(
-                model = if (images.isNotEmpty()) images[0] else "",
+                model = if (images.isNotEmpty()) images[imageIndex] else "",
                 placeholder = painterResource(id = R.drawable.fc4_self_massage),
                 error = painterResource(id = R.drawable.fc4_self_massage),
                 contentDescription = null,

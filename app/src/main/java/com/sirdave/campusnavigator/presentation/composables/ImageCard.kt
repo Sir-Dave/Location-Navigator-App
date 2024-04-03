@@ -18,6 +18,7 @@ import com.sirdave.campusnavigator.domain.model.Place
 @Composable
 fun ImageCard(
     place: Place,
+    imageIndex: Int,
     onViewFullScreen: () -> Unit,
     modifier: Modifier = Modifier
 ){
@@ -27,7 +28,7 @@ fun ImageCard(
         Box(modifier = modifier.fillMaxSize()){
             val images = place.imageUrls
             AsyncImage(
-                model = if (images.isNotEmpty()) images[0] else "",
+                model = if (images.isNotEmpty()) images[imageIndex] else "",
                 placeholder = painterResource(id = R.drawable.ab3_stretching),
                 error = painterResource(id = R.drawable.ab3_stretching),
                 contentDescription = null,

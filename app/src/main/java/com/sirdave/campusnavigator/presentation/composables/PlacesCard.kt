@@ -21,6 +21,7 @@ import com.sirdave.campusnavigator.domain.model.places
 @Composable
 fun PopularPlace(
     place: Place,
+    imageIndex: Int,
     onViewFullScreen: () -> Unit,
     modifier: Modifier = Modifier
 ){
@@ -29,6 +30,7 @@ fun PopularPlace(
         .width(IntrinsicSize.Min)) {
         ImageCard(
             place = place,
+            imageIndex = imageIndex,
             onViewFullScreen = onViewFullScreen
         )
 
@@ -124,7 +126,7 @@ fun PlaceCard(
 @Preview(showBackground = true)
 @Composable
 fun PlacesPreview() {
-    PopularPlace(place = places[0], onViewFullScreen = {})
+    PopularPlace(place = places[0], imageIndex = 0, onViewFullScreen = {})
 }
 
 @RequiresApi(Build.VERSION_CODES.O)

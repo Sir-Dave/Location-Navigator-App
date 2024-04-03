@@ -3,6 +3,7 @@ package com.sirdave.campusnavigator.presentation.composables
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -39,9 +40,10 @@ fun DestinationDetail(
         Spacer(modifier = modifier.height(16.dp))
 
         LazyRow(modifier = modifier){
-            items(5){
+            itemsIndexed(place.imageUrls){ index, _ ->
                 ImageCard(
                     place = place,
+                    imageIndex = index,
                     onViewFullScreen = onViewFullScreen,
                 )
                 Spacer(modifier = modifier.width(8.dp))

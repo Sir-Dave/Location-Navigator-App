@@ -3,6 +3,7 @@ package com.sirdave.campusnavigator.presentation.screens
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
@@ -70,9 +71,10 @@ fun ExploreScreen(
         )
 
         LazyRow(modifier = modifier){
-            items(places){ place ->
+            items(places){place ->
                 PopularPlace(
                     place = place,
+                    imageIndex = 0,
                     onViewFullScreen = onViewFullScreen
                 )
             }

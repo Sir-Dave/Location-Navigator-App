@@ -1,5 +1,7 @@
 package com.sirdave.campusnavigator.domain.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import java.time.LocalDateTime
 
 enum class PlaceType(val title: String) {
@@ -18,6 +20,7 @@ enum class HostelCategory(val title: String) {
     PRIVATE("Private")
 }
 
+@Parcelize
 data class Place (
     val id: Long,
     var name: String,
@@ -29,7 +32,7 @@ data class Place (
     var imageUrls: List<String>,
     var category: String?,
     var updatedAt: LocalDateTime?
-)
+): Parcelable
 
 val places = listOf(
     Place(

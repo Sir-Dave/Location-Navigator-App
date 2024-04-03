@@ -3,7 +3,6 @@ package com.sirdave.campusnavigator.presentation.navigation
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -11,7 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
-import com.sirdave.campusnavigator.R
+import com.sirdave.campusnavigator.domain.model.Place
 import com.sirdave.campusnavigator.presentation.composables.DestinationPictureExpanded
 import com.sirdave.campusnavigator.presentation.places.PlaceViewModel
 import com.sirdave.campusnavigator.presentation.screens.ExploreScreen
@@ -20,6 +19,7 @@ import com.sirdave.campusnavigator.presentation.screens.SearchScreen
 import com.sirdave.campusnavigator.presentation.screens.UpdatesScreen
 
 private const val PLACE_TYPE = "placeType"
+private const val PLACE = "place"
 
 @Composable
 fun Navigation(
@@ -42,7 +42,8 @@ fun Navigation(
                     state = viewModel.placeState,
                     padding = padding,
                     onEvent = viewModel::onEvent,
-                    onViewFullScreen = {
+                    onViewFullScreen = { place ->
+                        navHostController.currentBackStackEntry?.savedStateHandle?.set(PLACE, place)
                         navHostController.navigate(Screen.DestinationPicturesExpandedScreen.route)
                     }
                 )
@@ -56,7 +57,8 @@ fun Navigation(
                         navHostController.navigate(route)
                     },
                     onEvent = viewModel::onEvent,
-                    onViewFullScreen = {
+                    onViewFullScreen = { place ->
+                        navHostController.currentBackStackEntry?.savedStateHandle?.set(PLACE, place)
                         navHostController.navigate(Screen.DestinationPicturesExpandedScreen.route)
                     }
                 )
@@ -83,11 +85,13 @@ fun Navigation(
             }
 
             composable(Screen.DestinationPicturesExpandedScreen.route){
-                DestinationPictureExpanded(
-                    pageCount = 6,
-                    name = stringResource(id = R.string.placeholder_place_name),
-                    onBackClicked = { navHostController.popBackStack() }
-                )
+                val currentPlace = navHostController.previousBackStackEntry?.savedStateHandle?.get<Place>(PLACE)
+                currentPlace?.let { place ->
+                    DestinationPictureExpanded(
+                        place = place,
+                        onBackClicked = { navHostController.popBackStack() }
+                    )
+                }
             }
         }
     }

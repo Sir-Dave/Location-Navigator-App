@@ -3,7 +3,6 @@ package com.sirdave.campusnavigator.presentation.screens
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
@@ -18,6 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sirdave.campusnavigator.R
+import com.sirdave.campusnavigator.domain.model.Place
 import com.sirdave.campusnavigator.presentation.composables.PopularPlace
 import com.sirdave.campusnavigator.presentation.composables.SegmentedPlaces
 import com.sirdave.campusnavigator.presentation.places.PlaceEvent
@@ -28,7 +28,7 @@ fun ExploreScreen(
     state: PlaceState,
     onNavigateToDetails: (String) -> Unit,
     onEvent: (PlaceEvent) -> Unit,
-    onViewFullScreen: () -> Unit,
+    onViewFullScreen: (Place) -> Unit,
     modifier: Modifier = Modifier,
 ){
     val places = state.allPlaces

@@ -22,7 +22,7 @@ import com.sirdave.campusnavigator.domain.model.places
 fun PopularPlace(
     place: Place,
     imageIndex: Int,
-    onViewFullScreen: () -> Unit,
+    onViewFullScreen: (Place) -> Unit,
     modifier: Modifier = Modifier
 ){
     Column(modifier = modifier

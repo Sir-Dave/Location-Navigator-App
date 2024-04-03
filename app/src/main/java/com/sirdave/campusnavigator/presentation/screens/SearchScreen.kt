@@ -13,7 +13,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.sirdave.campusnavigator.R
 import com.sirdave.campusnavigator.domain.model.Place
-import com.sirdave.campusnavigator.domain.model.places
 import com.sirdave.campusnavigator.presentation.composables.DestinationDetail
 import com.sirdave.campusnavigator.presentation.composables.Search
 import com.sirdave.campusnavigator.presentation.places.PlaceEvent
@@ -31,7 +30,7 @@ fun SearchScreen(
     state: PlaceState,
     padding: PaddingValues,
     onEvent: (PlaceEvent) -> Unit,
-    onViewFullScreen: () -> Unit
+    onViewFullScreen: (Place) -> Unit
 ){
     var currentScreen by remember { mutableStateOf(BottomSheetContent.Search) }
     val scaffoldSheetState = rememberBottomSheetScaffoldState()

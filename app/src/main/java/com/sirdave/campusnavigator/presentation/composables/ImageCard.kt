@@ -19,7 +19,7 @@ import com.sirdave.campusnavigator.domain.model.Place
 fun ImageCard(
     place: Place,
     imageIndex: Int,
-    onViewFullScreen: () -> Unit,
+    onViewFullScreen: (Place) -> Unit,
     modifier: Modifier = Modifier
 ){
     OutlinedCard(
@@ -42,7 +42,7 @@ fun ImageCard(
                 tint = Color.White,
                 modifier = modifier.align(Alignment.BottomEnd)
                     .padding(end = 8.dp, bottom = 8.dp)
-                    .clickable { onViewFullScreen() },
+                    .clickable { onViewFullScreen(place) },
             )
         }
 

@@ -24,7 +24,7 @@ import com.sirdave.campusnavigator.domain.model.places
 @Composable
 fun DestinationDetail(
     place: Place,
-    onViewFullScreen: () -> Unit,
+    onViewFullScreen: (Place) -> Unit,
     onBackClicked: () -> Unit,
     modifier: Modifier = Modifier
 ){

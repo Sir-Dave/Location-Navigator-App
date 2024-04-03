@@ -2,7 +2,6 @@ package com.sirdave.campusnavigator.presentation.composables
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -21,23 +20,24 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.sirdave.campusnavigator.R
+import com.sirdave.campusnavigator.domain.model.Place
+import com.sirdave.campusnavigator.domain.model.places
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun DestinationPictureExpanded(
-    pageCount: Int,
-    name: String,
+    place: Place,
     onBackClicked: () -> Unit,
     modifier: Modifier = Modifier
 ){
+    val pageCount = place.imageUrls.size
     val pagerState = rememberPagerState(pageCount = { pageCount })
     val coroutineScope = rememberCoroutineScope()
     var currentPage by remember {
@@ -54,8 +54,8 @@ fun DestinationPictureExpanded(
             Box(modifier = Modifier.weight(1f)) {
                 HorizontalPager(state = pagerState) {
                     Box(modifier = modifier.fillMaxSize()){
-                        Image(
-                            painter = painterResource(id = R.drawable.fc4_self_massage),
+                        AsyncImage(
+                            model = place.imageUrls[it],
                             contentDescription = null,
                             contentScale = ContentScale.Crop,
                             modifier = Modifier.fillMaxSize()
@@ -80,7 +80,7 @@ fun DestinationPictureExpanded(
                         }
 
                         Text(
-                            text = name,
+                            text = place.name,
                             modifier = modifier.align(Alignment.BottomCenter),
                             color = Color.White,
                             fontWeight = FontWeight.Bold
@@ -158,8 +158,7 @@ fun LinearIndicator(
 @Composable
 fun DestinationExpandedPreview() {
     DestinationPictureExpanded(
-        pageCount = 1,
-        name = stringResource(id = R.string.placeholder_place_name),
+        place = places[0],
         onBackClicked = {}
     )
 }

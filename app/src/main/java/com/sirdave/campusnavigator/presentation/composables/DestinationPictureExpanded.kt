@@ -106,6 +106,8 @@ fun DestinationPictureExpanded(
                                 if (currentPage < pageCount - 1)
                                     currentPage++
 
+                                else onBackClicked()
+
                                 pagerState.animateScrollToPage(currentPage)
                             }
                         }

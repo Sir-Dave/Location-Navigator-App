@@ -23,6 +23,7 @@ import com.sirdave.campusnavigator.domain.model.PlaceData
 import com.sirdave.campusnavigator.presentation.composables.PlaceCard
 import com.sirdave.campusnavigator.presentation.places.PlaceEvent
 import com.sirdave.campusnavigator.presentation.places.PlaceState
+import com.sirdave.campusnavigator.util.getPlaceType
 
 @Composable
 fun PlaceCategoryList(
@@ -36,7 +37,8 @@ fun PlaceCategoryList(
     val places = state.allPlaces
 
     LaunchedEffect(Unit){
-        onEvent(PlaceEvent.SearchPlacesByType(title))
+        val type = getPlaceType(title)
+        onEvent(PlaceEvent.SearchPlacesByType(type))
     }
 
     Column {

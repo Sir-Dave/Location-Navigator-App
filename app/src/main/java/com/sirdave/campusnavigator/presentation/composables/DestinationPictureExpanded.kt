@@ -60,8 +60,7 @@ fun DestinationPictureExpanded(
                         AsyncImage(
                             model = place.imageUrls[it],
                             contentDescription = null,
-                            contentScale = ContentScale.Crop,
-                            modifier = Modifier.fillMaxSize()
+                            modifier = modifier.fillMaxSize().background(Color.Black)
                         )
 
                         Box(

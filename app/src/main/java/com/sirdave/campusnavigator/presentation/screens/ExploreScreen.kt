@@ -17,7 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sirdave.campusnavigator.R
-import com.sirdave.campusnavigator.domain.model.Place
+import com.sirdave.campusnavigator.domain.model.PlaceData
 import com.sirdave.campusnavigator.presentation.composables.PopularPlace
 import com.sirdave.campusnavigator.presentation.composables.SegmentedPlaces
 import com.sirdave.campusnavigator.presentation.places.PlaceEvent
@@ -28,7 +28,7 @@ fun ExploreScreen(
     state: PlaceState,
     onNavigateToDetails: (String) -> Unit,
     onEvent: (PlaceEvent) -> Unit,
-    onViewFullScreen: (Place) -> Unit,
+    onViewFullScreen: (PlaceData) -> Unit,
     modifier: Modifier = Modifier,
 ){
     val places = state.allPlaces

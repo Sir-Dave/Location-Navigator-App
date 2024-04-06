@@ -19,12 +19,13 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.sirdave.campusnavigator.R
 import com.sirdave.campusnavigator.domain.model.Place
+import com.sirdave.campusnavigator.domain.model.PlaceData
 import com.sirdave.campusnavigator.domain.model.places
 
 @Composable
 fun DestinationDetail(
     place: Place,
-    onViewFullScreen: (Place) -> Unit,
+    onViewFullScreen: (PlaceData) -> Unit,
     onBackClicked: () -> Unit,
     modifier: Modifier = Modifier
 ){

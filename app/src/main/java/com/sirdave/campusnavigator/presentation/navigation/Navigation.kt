@@ -10,7 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
-import com.sirdave.campusnavigator.domain.model.Place
+import com.sirdave.campusnavigator.domain.model.PlaceData
 import com.sirdave.campusnavigator.presentation.composables.DestinationPictureExpanded
 import com.sirdave.campusnavigator.presentation.places.PlaceViewModel
 import com.sirdave.campusnavigator.presentation.screens.ExploreScreen
@@ -57,8 +57,8 @@ fun Navigation(
                         navHostController.navigate(route)
                     },
                     onEvent = viewModel::onEvent,
-                    onViewFullScreen = { place ->
-                        navHostController.currentBackStackEntry?.savedStateHandle?.set(PLACE, place)
+                    onViewFullScreen = { placeData ->
+                        navHostController.currentBackStackEntry?.savedStateHandle?.set(PLACE, placeData)
                         navHostController.navigate(Screen.DestinationPicturesExpandedScreen.route)
                     }
                 )
@@ -85,10 +85,10 @@ fun Navigation(
             }
 
             composable(Screen.DestinationPicturesExpandedScreen.route){
-                val currentPlace = navHostController.previousBackStackEntry?.savedStateHandle?.get<Place>(PLACE)
-                currentPlace?.let { place ->
+                val currentPlace = navHostController.previousBackStackEntry?.savedStateHandle?.get<PlaceData>(PLACE)
+                currentPlace?.let { placeData ->
                     DestinationPictureExpanded(
-                        place = place,
+                        selectedPlace = placeData,
                         onBackClicked = { navHostController.popBackStack() }
                     )
                 }

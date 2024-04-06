@@ -21,27 +21,30 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.sirdave.campusnavigator.R
-import com.sirdave.campusnavigator.domain.model.Place
-import com.sirdave.campusnavigator.domain.model.places
+import com.sirdave.campusnavigator.domain.model.PlaceData
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun DestinationPictureExpanded(
-    place: Place,
+    selectedPlace: PlaceData,
     onBackClicked: () -> Unit,
     modifier: Modifier = Modifier
 ){
+    val place = selectedPlace.place
+    val startIndex = selectedPlace.imageIndex
     val pageCount = place.imageUrls.size
-    val pagerState = rememberPagerState(pageCount = { pageCount })
+    val pagerState = rememberPagerState(
+        initialPage = startIndex,
+        pageCount = { pageCount }
+    )
     val coroutineScope = rememberCoroutineScope()
     var currentPage by remember {
-        mutableStateOf(0)
+        mutableStateOf(startIndex)
     }
 
     LaunchedEffect(pagerState.currentPage) {
@@ -150,15 +153,5 @@ fun LinearIndicator(
             .clip(RoundedCornerShape(12.dp)),
 
         progress = animatedProgress
-    )
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun DestinationExpandedPreview() {
-    DestinationPictureExpanded(
-        place = places[0],
-        onBackClicked = {}
     )
 }

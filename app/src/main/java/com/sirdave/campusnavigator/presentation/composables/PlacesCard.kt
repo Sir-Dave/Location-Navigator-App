@@ -16,13 +16,14 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.sirdave.campusnavigator.R
 import com.sirdave.campusnavigator.domain.model.Place
+import com.sirdave.campusnavigator.domain.model.PlaceData
 import com.sirdave.campusnavigator.domain.model.places
 
 @Composable
 fun PopularPlace(
     place: Place,
     imageIndex: Int,
-    onViewFullScreen: (Place) -> Unit,
+    onViewFullScreen: (PlaceData) -> Unit,
     modifier: Modifier = Modifier
 ){
     Column(modifier = modifier

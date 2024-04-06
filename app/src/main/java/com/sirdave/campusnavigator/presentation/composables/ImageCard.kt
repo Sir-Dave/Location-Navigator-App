@@ -14,12 +14,13 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.sirdave.campusnavigator.R
 import com.sirdave.campusnavigator.domain.model.Place
+import com.sirdave.campusnavigator.domain.model.PlaceData
 
 @Composable
 fun ImageCard(
     place: Place,
     imageIndex: Int,
-    onViewFullScreen: (Place) -> Unit,
+    onViewFullScreen: (PlaceData) -> Unit,
     modifier: Modifier = Modifier
 ){
     OutlinedCard(
@@ -42,7 +43,10 @@ fun ImageCard(
                 tint = Color.White,
                 modifier = modifier.align(Alignment.BottomEnd)
                     .padding(end = 8.dp, bottom = 8.dp)
-                    .clickable { onViewFullScreen(place) },
+                    .clickable {
+                        val placeData = PlaceData(place, imageIndex)
+                        onViewFullScreen(placeData)
+                    }
             )
         }
 

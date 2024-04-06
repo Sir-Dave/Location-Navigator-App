@@ -80,7 +80,11 @@ fun Navigation(
                     onBackClick = {
                         navHostController.popBackStack()
                     },
-                    onEvent = viewModel::onEvent
+                    onEvent = viewModel::onEvent,
+                    onViewFullScreen = { placeData ->
+                        navHostController.currentBackStackEntry?.savedStateHandle?.set(PLACE, placeData)
+                        navHostController.navigate(Screen.DestinationPicturesExpandedScreen.route)
+                    }
                 )
             }
 

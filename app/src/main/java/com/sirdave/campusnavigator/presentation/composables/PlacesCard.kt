@@ -78,12 +78,14 @@ fun PopularPlace(
 fun PlaceCard(
     place: Place,
     imageIndex: Int,
+    onViewFullScreen: (PlaceData) -> Unit,
     modifier: Modifier = Modifier){
     Column(modifier = modifier.padding(8.dp)) {
         Row{
             ImageCardSmall(
                 place = place,
-                imageIndex = imageIndex
+                imageIndex = imageIndex,
+                onViewFullScreen = onViewFullScreen
             )
             Spacer(modifier = modifier.width(16.dp))
             Column {
@@ -138,5 +140,5 @@ fun PlacesPreview() {
 @Preview(showBackground = true)
 @Composable
 fun PlacesCardPreview() {
-    PlaceCard(place = places[0], 0)
+    PlaceCard(place = places[0], 0, onViewFullScreen = {})
 }

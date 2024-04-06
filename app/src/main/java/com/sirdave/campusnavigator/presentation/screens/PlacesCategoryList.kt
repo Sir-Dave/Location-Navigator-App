@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Icon
@@ -18,6 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sirdave.campusnavigator.R
+import com.sirdave.campusnavigator.domain.model.PlaceData
 import com.sirdave.campusnavigator.presentation.composables.PlaceCard
 import com.sirdave.campusnavigator.presentation.places.PlaceEvent
 import com.sirdave.campusnavigator.presentation.places.PlaceState
@@ -28,6 +30,7 @@ fun PlaceCategoryList(
     title: String,
     onBackClick: () -> Unit,
     onEvent: (PlaceEvent) -> Unit,
+    onViewFullScreen: (PlaceData) -> Unit,
     modifier: Modifier = Modifier) {
 
     val places = state.allPlaces
@@ -53,10 +56,14 @@ fun PlaceCategoryList(
         )
 
         LazyColumn(modifier = modifier){
-            items(places){place ->
+            itemsIndexed(places){index, place ->
                 PlaceCard(
                     place = place,
-                    imageIndex = 0
+                    imageIndex = 0,
+                    onViewFullScreen = {
+                        val placeData = PlaceData(place, index)
+                        onViewFullScreen(placeData)
+                    }
                 )
             }
         }
@@ -72,6 +79,7 @@ fun PlaceDetailPreview(){
         state = PlaceState(),
         title = stringResource(id = R.string.halls_of_residence),
         onEvent = {},
-        onBackClick = {}
+        onBackClick = {},
+        onViewFullScreen = {}
     )
 }

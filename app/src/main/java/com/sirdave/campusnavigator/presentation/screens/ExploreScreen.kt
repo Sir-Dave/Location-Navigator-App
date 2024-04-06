@@ -84,7 +84,8 @@ fun ExploreScreen(
 
         SegmentedPlaces(
             places = places,
-            onNavigateToDetails = onNavigateToDetails
+            onNavigateToDetails = onNavigateToDetails,
+            onViewFullScreen = onViewFullScreen
         )
     }
 

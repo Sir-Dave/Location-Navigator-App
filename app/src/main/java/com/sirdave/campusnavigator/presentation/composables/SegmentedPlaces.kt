@@ -16,11 +16,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.sirdave.campusnavigator.R
 import com.sirdave.campusnavigator.domain.model.Place
+import com.sirdave.campusnavigator.domain.model.PlaceData
 
 @Composable
 fun SegmentedPlaces(
     places: List<Place>,
     onNavigateToDetails: (String) -> Unit,
+    onViewFullScreen: (PlaceData) -> Unit,
     modifier: Modifier = Modifier
 ){
     LazyColumn(
@@ -39,7 +41,8 @@ fun SegmentedPlaces(
             items(places){ place ->
                 PlaceCard(
                     place = place,
-                    imageIndex = 0
+                    imageIndex = 0,
+                    onViewFullScreen = onViewFullScreen
                 )
             }
         }

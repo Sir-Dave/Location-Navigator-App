@@ -1,5 +1,6 @@
 package com.sirdave.campusnavigator.presentation.composables
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -16,11 +17,13 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.sirdave.campusnavigator.R
 import com.sirdave.campusnavigator.domain.model.Place
+import com.sirdave.campusnavigator.domain.model.PlaceData
 
 @Composable
 fun ImageCardSmall(
     place: Place,
     imageIndex: Int,
+    onViewFullScreen: (PlaceData) -> Unit,
     modifier: Modifier = Modifier){
     OutlinedCard(
         modifier = modifier.size(85.dp),
@@ -39,7 +42,11 @@ fun ImageCardSmall(
                 contentDescription = null,
                 tint = Color.White,
                 modifier = modifier.align(Alignment.BottomEnd)
-                    .padding(end = 8.dp, bottom = 8.dp).size(15.dp),
+                    .padding(end = 8.dp, bottom = 8.dp).size(15.dp)
+                    .clickable {
+                        val placeData = PlaceData(place, imageIndex)
+                        onViewFullScreen(placeData)
+                    },
             )
         }
 

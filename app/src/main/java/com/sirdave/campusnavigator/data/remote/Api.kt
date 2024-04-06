@@ -20,7 +20,7 @@ interface Api {
 
     @GET("api/v1/places")
     suspend fun getPlacesByType(
-        @Query("email") type: String
+        @Query("type") type: String
     ): Response<List<PlaceDto>>
 
     @GET("api/v1/places")

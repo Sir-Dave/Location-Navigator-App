@@ -91,4 +91,6 @@ dependencies {
     //OSM
     def osm_version = "6.1.14"
     implementation "org.osmdroid:osmdroid-android:$osm_version"
+    implementation 'com.github.MKergall:osmbonuspack:6.9.0'
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
 }

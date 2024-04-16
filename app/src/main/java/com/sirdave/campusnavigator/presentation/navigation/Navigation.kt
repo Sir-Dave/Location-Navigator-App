@@ -41,6 +41,7 @@ fun Navigation(
                 SearchScreen(
                     state = viewModel.placeState,
                     padding = padding,
+                    locationEvent = viewModel.registrationEvent,
                     onEvent = viewModel::onEvent,
                     onViewFullScreen = { place ->
                         navHostController.currentBackStackEntry?.savedStateHandle?.set(PLACE, place)

@@ -1,6 +1,7 @@
 package com.sirdave.campusnavigator.di
 
 import android.content.Context
+import com.sirdave.campusnavigator.data.OSMRepository
 import com.sirdave.campusnavigator.data.PlaceRepositoryImpl
 import com.sirdave.campusnavigator.data.remote.Api
 import com.sirdave.campusnavigator.domain.repository.PlaceRepository
@@ -22,5 +23,11 @@ object RepositoryModule {
         api: Api
     ): PlaceRepository {
         return PlaceRepositoryImpl(context, api)
+    }
+
+    @Provides
+    @Singleton
+    fun provideOSMRepository(@ApplicationContext context: Context): OSMRepository {
+        return OSMRepository(context)
     }
 }

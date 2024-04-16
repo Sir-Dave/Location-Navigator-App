@@ -3,7 +3,6 @@ package com.sirdave.campusnavigator.presentation.screens
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.graphics.Rect
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -21,6 +20,7 @@ import com.sirdave.campusnavigator.presentation.places.PlaceState
 import kotlinx.coroutines.*
 import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
+import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
@@ -105,14 +105,12 @@ fun SearchScreen(
                                 }
                             }
                         }
-                        // val mapPoint = GeoPoint(latitude, longitude)
-
-                        controller.setZoom(6.0)
-
-                        Log.e("TAG", "onCreate:in ${controller.zoomIn()}")
-                        Log.e("TAG", "onCreate: out  ${controller.zoomOut()}")
-
-                        // controller.animateTo(mapPoint)
+                        val currentLocation = state.lastKnownLocation
+                        currentLocation?.let {location ->
+                            val mapPoint = GeoPoint(location.latitude, location.longitude)
+                            controller.setZoom(6.0)
+                            controller.animateTo(mapPoint)
+                        }
                         overlays.add(mMyLocationOverlay)
                     }
                 },

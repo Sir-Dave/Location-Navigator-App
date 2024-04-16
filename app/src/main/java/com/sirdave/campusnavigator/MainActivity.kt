@@ -2,7 +2,6 @@ package com.sirdave.campusnavigator
 
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.content.pm.PackageManager
-import android.location.LocationManager
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -15,7 +14,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -25,16 +23,16 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.sirdave.campusnavigator.domain.model.BottomNavItem
 import com.sirdave.campusnavigator.presentation.composables.BottomNavigationBar
-import com.sirdave.campusnavigator.presentation.map.MapViewModel
 import com.sirdave.campusnavigator.presentation.navigation.Navigation
 import com.sirdave.campusnavigator.presentation.navigation.Screen
+import com.sirdave.campusnavigator.presentation.places.PlaceViewModel
 import com.sirdave.campusnavigator.ui.theme.CampusNavigatorTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-    private val viewModel: MapViewModel by viewModels()
+    private val viewModel: PlaceViewModel by viewModels()
 
     private val requestPermissionLauncher =
         registerForActivityResult(

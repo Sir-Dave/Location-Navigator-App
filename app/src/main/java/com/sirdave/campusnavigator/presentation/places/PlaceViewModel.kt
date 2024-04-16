@@ -1,10 +1,13 @@
 package com.sirdave.campusnavigator.presentation.places
 
+import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.android.gms.location.FusedLocationProviderClient
 import com.sirdave.campusnavigator.domain.repository.PlaceRepository
 import com.sirdave.campusnavigator.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,10 +20,29 @@ class PlaceViewModel @Inject constructor(
     private val repository: PlaceRepository) : ViewModel(){
 
     var placeState by mutableStateOf(PlaceState())
-    var searchJob: Job? = null
+    private var searchJob: Job? = null
 
     init {
         getAllPlaces()
+    }
+
+    @SuppressLint("MissingPermission")
+    fun getDeviceLocation(
+        fusedLocationProviderClient: FusedLocationProviderClient
+    ) {
+        try {
+            val locationResult = fusedLocationProviderClient.lastLocation
+            locationResult.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    placeState = placeState.copy(
+                        lastKnownLocation = task.result,
+                    )
+                    Log.d("ViewModel", "latitude and longitude are ${placeState.lastKnownLocation?.latitude} and  ${placeState.lastKnownLocation?.longitude} ")
+                }
+            }
+        } catch (e: SecurityException) {
+            // Show error or something
+        }
     }
 
     private fun searchPlacesByName(name: String, fetchFromRemote: Boolean = true) {

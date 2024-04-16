@@ -8,19 +8,28 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.sirdave.campusnavigator.data.OSMRepository
 import com.sirdave.campusnavigator.domain.repository.PlaceRepository
 import com.sirdave.campusnavigator.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
+import org.osmdroid.util.GeoPoint
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.milliseconds
 
 @HiltViewModel
 class PlaceViewModel @Inject constructor(
-    private val repository: PlaceRepository) : ViewModel(){
+    private val repository: PlaceRepository,
+    private val osmRepository: OSMRepository
+) : ViewModel(){
 
     var placeState by mutableStateOf(PlaceState())
     private var searchJob: Job? = null
+
+    private val locationEventChannel = Channel<LocationEvent>()
+    val registrationEvent = locationEventChannel.receiveAsFlow()
 
     init {
         getAllPlaces()
@@ -165,6 +174,35 @@ class PlaceViewModel @Inject constructor(
         }
     }
 
+    private fun getRoad(startPoint: GeoPoint, endPoint: GeoPoint, commuteMode: String){
+        Log.d("ViewModel", "getRoad called")
+        viewModelScope.launch {
+            when (val roadResult = osmRepository.getRoad(startPoint, endPoint, commuteMode)) {
+                is Resource.Success -> {
+                    Log.d("ViewModel", "data is here, ${roadResult.data?.mStatus}")
+                    placeState = placeState.copy(
+                        isLoading = false,
+                        error = null,
+                        road = roadResult.data!!
+                    )
+                    locationEventChannel.send(
+                        LocationEvent.Success(roadResult.data)
+                    )
+                }
+
+                is Resource.Error -> {
+                    Log.d("ViewModel", "no data found")
+                    placeState = placeState.copy(
+                        isLoading = false,
+                        error = roadResult.message,
+                        road = null
+                    )
+                }
+                else -> Unit
+            }
+        }
+    }
+
     fun onEvent(event: PlaceEvent){
         when(event){
             is PlaceEvent.GetAllPlaces -> {
@@ -186,6 +224,29 @@ class PlaceViewModel @Inject constructor(
                     delay(500.milliseconds)
                     searchPlacesByName(name = placeState.searchQuery)
                 }
+            }
+
+            /*is PlaceEvent.GetDirections -> {
+                val currentLocation = placeState.lastKnownLocation
+                val endPlace = placeState.currentPlace
+
+                if (currentLocation != null && endPlace != null){
+                    val startPoint = GeoPoint(currentLocation.latitude, currentLocation.longitude)
+                    val endPoint = GeoPoint(endPlace.latitude, endPlace.longitude)
+                    getRoad(startPoint, endPoint, commuteMode = event.commuteMode)
+                }
+
+            }*/
+
+            is PlaceEvent.GetDirections -> {
+                val currentLocation = placeState.lastKnownLocation
+
+                if (currentLocation != null){
+                    val startPoint = GeoPoint(currentLocation.latitude, currentLocation.longitude)
+                    val endPoint = GeoPoint(event.latitude, event.longitude)
+                    getRoad(startPoint, endPoint, event.commuteMode)
+                }
+
             }
         }
     }

@@ -17,5 +17,7 @@
     <string name="see_all">See all</string>
     <string name="commute_mode">Choose commute mode</string>
     <string name="start">Start</string>
+    <string name="exit">Exit</string>
+
 
 </resources>

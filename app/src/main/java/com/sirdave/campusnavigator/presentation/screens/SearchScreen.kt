@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.graphics.Rect
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -50,9 +51,11 @@ fun SearchScreen(
         locationEvent.collect{ event ->
             when (event){
                 is LocationEvent.Success ->{
-                    Log.d("SearchScreen:LaunchedEffect", "road size is ${event.road.mNodes.size}")
                     road = event.road
-                    Log.d("SearchScreen:AfterLaunchedEffect", "road size is ${road!!.mNodes.size}")
+                }
+
+                is LocationEvent.Error -> {
+                    Toast.makeText(context, event.message, Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -139,7 +142,6 @@ fun SearchScreen(
                     }
                 },
                 update = { view ->
-                    Log.d("SearchScreen:Update", "is road null, ${road == null}")
                     road?.let { r ->
                         val roadOverlay = RoadManager.buildRoadOverlay(r)
                         val roadMarkers = getRoadMarkers(context = context, mapView = view, road = r)

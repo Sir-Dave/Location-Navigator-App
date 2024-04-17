@@ -175,11 +175,9 @@ class PlaceViewModel @Inject constructor(
     }
 
     private fun getRoad(startPoint: GeoPoint, endPoint: GeoPoint, commuteMode: String){
-        Log.d("ViewModel", "getRoad called")
         viewModelScope.launch {
             when (val roadResult = osmRepository.getRoad(startPoint, endPoint, commuteMode)) {
                 is Resource.Success -> {
-                    Log.d("ViewModel", "data is here, ${roadResult.data?.mStatus}")
                     placeState = placeState.copy(
                         isLoading = false,
                         error = null,
@@ -191,11 +189,14 @@ class PlaceViewModel @Inject constructor(
                 }
 
                 is Resource.Error -> {
-                    Log.d("ViewModel", "no data found")
                     placeState = placeState.copy(
                         isLoading = false,
                         error = roadResult.message,
                         road = null
+                    )
+
+                    locationEventChannel.send(
+                        LocationEvent.Error(roadResult.message!!)
                     )
                 }
                 else -> Unit

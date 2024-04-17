@@ -13,8 +13,6 @@ import com.sirdave.campusnavigator.domain.repository.PlaceRepository
 import com.sirdave.campusnavigator.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.receiveAsFlow
 import org.osmdroid.util.GeoPoint
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.milliseconds
@@ -27,9 +25,6 @@ class PlaceViewModel @Inject constructor(
 
     var placeState by mutableStateOf(PlaceState())
     private var searchJob: Job? = null
-
-    private val locationEventChannel = Channel<LocationEvent>()
-    val registrationEvent = locationEventChannel.receiveAsFlow()
 
     init {
         getAllPlaces()
@@ -183,9 +178,6 @@ class PlaceViewModel @Inject constructor(
                         error = null,
                         road = roadResult.data!!
                     )
-                    locationEventChannel.send(
-                        LocationEvent.Success(roadResult.data)
-                    )
                 }
 
                 is Resource.Error -> {
@@ -193,10 +185,6 @@ class PlaceViewModel @Inject constructor(
                         isLoading = false,
                         error = roadResult.message,
                         road = null
-                    )
-
-                    locationEventChannel.send(
-                        LocationEvent.Error(roadResult.message!!)
                     )
                 }
                 else -> Unit

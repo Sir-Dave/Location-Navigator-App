@@ -111,53 +111,29 @@ fun DestinationDetail(
                 .padding(top = 8.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ){
-            OutlinedButton(
+            CustomIconButton(
                 onClick = { },
-                colors = ButtonDefaults.outlinedButtonColors(
+                buttonColor = ButtonDefaults.outlinedButtonColors(
                     containerColor = Color.LightGray,
                     contentColor = Color.Black
                 ),
-                shape = RoundedCornerShape(8.dp),
-                modifier = Modifier.weight(1f)
-            ) {
-                Row {
-                    Icon(
-                        painter = painterResource(id = R.drawable.baseline_menu),
-                        contentDescription = null,
-                    )
-                    Spacer(modifier = modifier.width(4.dp))
-                    Text(
-                        text = stringResource(id = R.string.how_to_get_there),
-                        fontSize = 15.sp
-                    )
-                }
-            }
+                modifier = Modifier.weight(1f),
+                text = stringResource(id = R.string.how_to_get_there),
+                drawable = R.drawable.baseline_menu
+            )
 
             Spacer(modifier = modifier.width(8.dp))
 
-            OutlinedButton(
+            CustomIconButton(
                 onClick = { },
-                colors = ButtonDefaults.outlinedButtonColors(
+                buttonColor = ButtonDefaults.outlinedButtonColors(
                     containerColor = Color.Black,
                     contentColor = Color.White
                 ),
-                shape = RoundedCornerShape(8.dp),
-                modifier = Modifier.weight(1f)
-            ) {
-                Row{
-                    Icon(
-                        painter = painterResource(id = R.drawable.baseline_near_me),
-                        contentDescription = null,
-                    )
-
-                    Spacer(modifier = modifier.width(4.dp))
-
-                    Text(
-                        text = stringResource(id = R.string.direct_me),
-                        fontSize = 15.sp
-                    )
-                }
-            }
+                modifier = Modifier.weight(1f),
+                text = stringResource(id = R.string.direct_me),
+                drawable = R.drawable.baseline_near_me
+            )
         }
     }
     

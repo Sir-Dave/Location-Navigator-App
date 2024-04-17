@@ -15,5 +15,7 @@
     <string name="placeholder_place_alias">KDLT</string>
     <string name="explore">Explore</string>
     <string name="see_all">See all</string>
+    <string name="commute_mode">Choose commute mode</string>
+    <string name="start">Start</string>
 
 </resources>

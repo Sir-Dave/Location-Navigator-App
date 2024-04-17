@@ -1,0 +1,108 @@
+package com.sirdave.campusnavigator.presentation.composables
+
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.sirdave.campusnavigator.R
+import com.sirdave.campusnavigator.domain.model.Place
+import com.sirdave.campusnavigator.domain.model.places
+
+@Composable
+fun DirectionsBar(
+    place: Place,
+    onBackClick: () -> Unit,
+    onWalkSelected: () -> Unit,
+    onCarSelected: () -> Unit,
+    onBikeSelected: () -> Unit,
+    modifier: Modifier = Modifier
+){
+    Column(
+        modifier = modifier.padding(8.dp)
+    ) {
+        Icon(
+            imageVector = Icons.Default.ArrowBack,
+            contentDescription = null,
+            modifier = modifier.clickable { onBackClick() }
+        )
+        
+        Spacer(modifier = modifier.height(16.dp))
+
+        Text(
+            text = stringResource(id = R.string.commute_mode),
+            style = MaterialTheme.typography.titleSmall
+        )
+
+        Spacer(modifier = modifier.height(16.dp))
+        
+        Row(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ){
+            CustomIconButton(
+                onClick = onWalkSelected,
+                modifier = Modifier.weight(1f),
+                text = "15 min",
+                drawable = R.drawable.baseline_directions_walk
+            )
+
+            Spacer(modifier = modifier.width(4.dp))
+
+            CustomIconButton(
+                onClick = onCarSelected,
+                modifier = Modifier.weight(1f),
+                text = "8 min",
+                drawable = R.drawable.baseline_directions_car
+            )
+
+            Spacer(modifier = modifier.width(4.dp))
+
+            CustomIconButton(
+                onClick = onBikeSelected,
+                modifier = Modifier.weight(1f),
+                text = "6 min",
+                drawable = R.drawable.baseline_directions_bike
+            )
+        }
+
+        Spacer(modifier = modifier.height(16.dp))
+
+        CustomIconButton(
+            onClick = onWalkSelected,
+            modifier = Modifier.fillMaxWidth(),
+            buttonColor = ButtonDefaults.outlinedButtonColors(
+                containerColor = Color.Black,
+                contentColor = Color.White
+            ),
+            text = stringResource(id = R.string.start),
+            drawable = R.drawable.baseline_near_me
+        )
+    }
+    
+}
+
+
+
+@Preview(showBackground = true)
+@Composable
+fun DirectionsBarPreview() {
+    DirectionsBar(
+        place = places[0],
+        onBackClick = {},
+        onWalkSelected = {},
+        onCarSelected = {},
+        onBikeSelected = {}
+    )
+}

@@ -12,18 +12,22 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sirdave.campusnavigator.R
-import com.sirdave.campusnavigator.domain.model.Place
-import com.sirdave.campusnavigator.domain.model.places
+import com.sirdave.campusnavigator.presentation.places.PlaceState
+import org.osmdroid.bonuspack.routing.OSRMRoadManager
 
 @Composable
 fun SelectedCommuteBar(
-    place: Place,
+    placeState: PlaceState,
     onExit: () -> Unit,
     onWalkSelected: () -> Unit,
     onCarSelected: () -> Unit,
     onBikeSelected: () -> Unit,
     modifier: Modifier = Modifier
 ){
+    val selectedMode = placeState.selectedMode
+    val selectedColor = ButtonDefaults.outlinedButtonColors(containerColor = Color.LightGray)
+    val unselectedColor = ButtonDefaults.outlinedButtonColors(containerColor = Color.Transparent)
+
     Column(
         modifier = modifier.padding(8.dp)
     ) {
@@ -37,7 +41,8 @@ fun SelectedCommuteBar(
                 onClick = onWalkSelected,
                 modifier = Modifier.weight(1f),
                 text = "15 min",
-                drawable = R.drawable.baseline_directions_walk
+                drawable = R.drawable.baseline_directions_walk,
+                buttonColor = if (selectedMode == OSRMRoadManager.MEAN_BY_FOOT) selectedColor else unselectedColor
             )
 
             Spacer(modifier = modifier.width(4.dp))
@@ -46,7 +51,8 @@ fun SelectedCommuteBar(
                 onClick = onCarSelected,
                 modifier = Modifier.weight(1f),
                 text = "8 min",
-                drawable = R.drawable.baseline_directions_car
+                drawable = R.drawable.baseline_directions_car,
+                buttonColor = if (selectedMode == OSRMRoadManager.MEAN_BY_CAR) selectedColor else unselectedColor
             )
 
             Spacer(modifier = modifier.width(4.dp))
@@ -55,7 +61,8 @@ fun SelectedCommuteBar(
                 onClick = onBikeSelected,
                 modifier = Modifier.weight(1f),
                 text = "6 min",
-                drawable = R.drawable.baseline_directions_bike
+                drawable = R.drawable.baseline_directions_bike,
+                buttonColor = if (selectedMode == OSRMRoadManager.MEAN_BY_BIKE) selectedColor else unselectedColor
             )
         }
 
@@ -106,7 +113,7 @@ fun SelectedCommuteBar(
 @Composable
 fun SelectedCommuteBarPreview() {
     SelectedCommuteBar(
-        place = places[0],
+        placeState = PlaceState(),
         onExit = {},
         onWalkSelected = {},
         onCarSelected = {},

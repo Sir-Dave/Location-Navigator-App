@@ -4,10 +4,12 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.*
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,6 +29,8 @@ fun DestinationDetail(
     place: Place,
     onViewFullScreen: (PlaceData) -> Unit,
     onBackClicked: () -> Unit,
+    onShowMapDirections: () -> Unit,
+    onDirect: () -> Unit,
     modifier: Modifier = Modifier
 ){
     Column(
@@ -112,7 +116,7 @@ fun DestinationDetail(
             horizontalArrangement = Arrangement.SpaceBetween
         ){
             CustomIconButton(
-                onClick = { },
+                onClick = onShowMapDirections,
                 buttonColor = ButtonDefaults.outlinedButtonColors(
                     containerColor = Color.LightGray,
                     contentColor = Color.Black
@@ -125,7 +129,7 @@ fun DestinationDetail(
             Spacer(modifier = modifier.width(8.dp))
 
             CustomIconButton(
-                onClick = { },
+                onClick = onDirect,
                 buttonColor = ButtonDefaults.outlinedButtonColors(
                     containerColor = Color.Black,
                     contentColor = Color.White
@@ -147,6 +151,8 @@ fun DetailPreview() {
     DestinationDetail(
         place = places[0],
         onViewFullScreen = {},
-        onBackClicked = {}
+        onBackClicked = {},
+        onDirect = {},
+        onShowMapDirections = {}
     )
 }

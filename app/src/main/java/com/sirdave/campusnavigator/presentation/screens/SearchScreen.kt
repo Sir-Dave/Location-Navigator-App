@@ -19,7 +19,9 @@ import com.sirdave.campusnavigator.R
 import com.sirdave.campusnavigator.domain.model.Place
 import com.sirdave.campusnavigator.domain.model.PlaceData
 import com.sirdave.campusnavigator.presentation.composables.DestinationDetail
+import com.sirdave.campusnavigator.presentation.composables.DirectionsBar
 import com.sirdave.campusnavigator.presentation.composables.Search
+import com.sirdave.campusnavigator.presentation.composables.SelectedCommuteBar
 import com.sirdave.campusnavigator.presentation.places.LocationEvent
 import com.sirdave.campusnavigator.presentation.places.PlaceEvent
 import com.sirdave.campusnavigator.presentation.places.PlaceState
@@ -47,6 +49,7 @@ fun SearchScreen(
     val context = LocalContext.current
     var road by remember { mutableStateOf<Road?>(null) }
 
+
     LaunchedEffect(Unit){
         locationEvent.collect{ event ->
             when (event){
@@ -73,27 +76,49 @@ fun SearchScreen(
         modifier = Modifier.padding(padding),
         sheetContent = {
             when (currentScreen){
-                BottomSheetContent.Search ->
+                BottomSheetContent.Search -> {
                     Search(
-                        state = state, 
+                        state = state,
                         onEvent = onEvent,
                         onViewDetails = { place ->
                             currentScreen = BottomSheetContent.Detail
                             selectedPlace = place
                         }
                     )
+                }
                 
-                    BottomSheetContent.Detail -> {
-                        selectedPlace?.let {
-                            DestinationDetail(
-                                place = it,
-                                onViewFullScreen = onViewFullScreen,
-                                onBackClicked = {
-                                    currentScreen = BottomSheetContent.Search
-                                }
-                            )
-                        }
+                BottomSheetContent.Detail -> {
+                    selectedPlace?.let {
+                        DestinationDetail(
+                            place = it,
+                            onViewFullScreen = onViewFullScreen,
+                            onBackClicked = { currentScreen = BottomSheetContent.Search },
+                            onShowMapDirections = {},
+                            onDirect = { currentScreen = BottomSheetContent.CommuteModes }
+                        )
                     }
+                }
+
+                BottomSheetContent.CommuteModes -> {
+                    DirectionsBar(
+                        placeState = state,
+                        onBackClick = { currentScreen = BottomSheetContent.Detail },
+                        onWalkSelected = { onEvent(PlaceEvent.OnCommuteModeChanged(OSRMRoadManager.MEAN_BY_FOOT)) },
+                        onCarSelected = { onEvent(PlaceEvent.OnCommuteModeChanged(OSRMRoadManager.MEAN_BY_CAR)) },
+                        onBikeSelected = { onEvent(PlaceEvent.OnCommuteModeChanged(OSRMRoadManager.MEAN_BY_BIKE)) },
+                        onStartClicked = { currentScreen = BottomSheetContent.SelectedMode }
+                    )
+                }
+
+                BottomSheetContent.SelectedMode -> {
+                    SelectedCommuteBar(
+                        placeState = state,
+                        onExit = { currentScreen = BottomSheetContent.CommuteModes },
+                        onWalkSelected = { onEvent(PlaceEvent.OnCommuteModeChanged(OSRMRoadManager.MEAN_BY_FOOT)) },
+                        onCarSelected = { onEvent(PlaceEvent.OnCommuteModeChanged(OSRMRoadManager.MEAN_BY_CAR)) },
+                        onBikeSelected = { onEvent(PlaceEvent.OnCommuteModeChanged(OSRMRoadManager.MEAN_BY_BIKE)) }
+                    )
+                }
             }
             
         },
@@ -136,7 +161,7 @@ fun SearchScreen(
                             PlaceEvent.GetDirections(
                                 endPoint.latitude,
                                 endPoint.longitude,
-                                OSRMRoadManager.MEAN_BY_FOOT
+                                state.selectedMode
                             )
                         )
                     }
@@ -201,5 +226,5 @@ private fun getSharedPreferences(context: Context) =
     context.getSharedPreferences(context.getString(R.string.app_name), MODE_PRIVATE)
 
 enum class BottomSheetContent{
-    Search, Detail
+    Search, Detail, CommuteModes, SelectedMode
 }

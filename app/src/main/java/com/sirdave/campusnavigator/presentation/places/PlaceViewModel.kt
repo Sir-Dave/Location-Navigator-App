@@ -227,18 +227,6 @@ class PlaceViewModel @Inject constructor(
                 }
             }
 
-            /*is PlaceEvent.GetDirections -> {
-                val currentLocation = placeState.lastKnownLocation
-                val endPlace = placeState.currentPlace
-
-                if (currentLocation != null && endPlace != null){
-                    val startPoint = GeoPoint(currentLocation.latitude, currentLocation.longitude)
-                    val endPoint = GeoPoint(endPlace.latitude, endPlace.longitude)
-                    getRoad(startPoint, endPoint, commuteMode = event.commuteMode)
-                }
-
-            }*/
-
             is PlaceEvent.GetDirections -> {
                 val currentLocation = placeState.lastKnownLocation
 
@@ -247,7 +235,18 @@ class PlaceViewModel @Inject constructor(
                     val endPoint = GeoPoint(event.latitude, event.longitude)
                     getRoad(startPoint, endPoint, event.commuteMode)
                 }
+            }
 
+            is PlaceEvent.OnCommuteModeChanged -> {
+                placeState = placeState.copy(selectedMode = event.commuteMode)
+                /*val currentLocation = placeState.lastKnownLocation
+                val endPlace = placeState.currentPlace
+
+                if (currentLocation != null && endPlace != null){
+                    val startPoint = GeoPoint(currentLocation.latitude, currentLocation.longitude)
+                    val endPoint = GeoPoint(endPlace.latitude, endPlace.longitude)
+                    getRoad(startPoint, endPoint, commuteMode = event.commuteMode)
+                }*/
             }
         }
     }

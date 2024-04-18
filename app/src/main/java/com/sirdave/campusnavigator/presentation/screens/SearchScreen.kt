@@ -156,28 +156,24 @@ fun SearchScreen(
                     update = { view ->
                         road?.let { r ->
                             val roadOverlay = RoadManager.buildRoadOverlay(r)
-                            val roadMarkers = getRoadMarkers(context = context, mapView = view, road = r)
+                            val roadMarkers = getRoadMarkers(context = context, mapView = view,
+                                road = r, currentPlace = state.currentPlace?.name)
                             view.overlays.addAll(roadMarkers)
                             view.overlays.add(roadOverlay)
                         }
 
                     }
                 )
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(200.dp)
-                        .background(Color.Black.copy(alpha = 0.5f))
-                ) {
-                    Log.d("LazyRow", "directions size is ${allDirections.size}")
-                    DirectionCard(
-                        direction = DirectionWithIcon(
-                            text = "Move straight ahead towards Queens roundabout Move straight ahead towards Queens roundabout Move straight ahead towards Queens roundabout",
-                            directionIcon = R.drawable.baseline_roundabout,
-                            distanceToNextLocation = "200m",
-                            timeToNextLocation = "30 seconds"
-                        )
-                    )
+                if (allDirections.isNotEmpty()){
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(IntrinsicSize.Min)
+                            .background(Color.Black.copy(alpha = 0.5f))
+                    ) {
+                        DirectionsToggleCard(directions = allDirections)
+                    }
+
                 }
             }
 
@@ -189,7 +185,8 @@ fun SearchScreen(
 private fun getRoadMarkers(
     context: Context,
     mapView: MapView,
-    road: Road
+    road: Road,
+    currentPlace: String?
 ): List<Marker>{
     val nodeMarkers = arrayListOf<Marker>()
     val startIcon = context.getDrawable(R.drawable.baseline_location)
@@ -207,10 +204,11 @@ private fun getRoadMarkers(
             0 -> {
                 nodeMarker.icon = startIcon
                 nodeMarker.title = "Start point"
+                nodeMarker.snippet = "You are here"
             }
             road.mNodes.lastIndex -> {
                 nodeMarker.icon = endIcon
-                nodeMarker.title = "Destination"
+                nodeMarker.title = currentPlace
             }
             else -> {
                 nodeMarker.icon = directionIcon
@@ -220,21 +218,14 @@ private fun getRoadMarkers(
                     Road.getLengthDurationText(context, node.mLength, node.mDuration)
             }
         }
-
-        Log.d("SearchScreen", "step is $i")
-        Log.d("SearchScreen", "node instruction is ${node.mInstructions}")
-        Log.d("SearchScreen", "node length is ${node.mLength}")
-        Log.d("SearchScreen", "node duration is ${node.mDuration}")
-        Log.d("SearchScreen", "<===================>")
         nodeMarkers.add(nodeMarker)
     }
     return nodeMarkers
-    //nodeMarkers
 }
 
 private fun getDirections(road: Road): List<DirectionWithIcon>{
     val directions = arrayListOf<DirectionWithIcon>()
-    for (i in road.mNodes.indices) {
+    for (i in 1 until road.mNodes.size - 1) {
         val node = road.mNodes[i]
 
         val instructions = node.mInstructions
@@ -249,6 +240,11 @@ private fun getDirections(road: Road): List<DirectionWithIcon>{
             directions.add(directionsWithIcon)
         }
     }
+    val lastDirection = DirectionWithIcon(
+        text = "You have reached your destination",
+        directionIcon = R.drawable.baseline_keyboard_double_arrow_down
+    )
+    directions.add(lastDirection)
     return directions
 }
 

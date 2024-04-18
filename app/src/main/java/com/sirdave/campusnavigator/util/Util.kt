@@ -1,5 +1,6 @@
 package com.sirdave.campusnavigator.util
 
+import android.icu.text.DecimalFormat
 import com.sirdave.campusnavigator.R
 import com.sirdave.campusnavigator.domain.model.DirectionWithIcon
 import com.sirdave.campusnavigator.domain.model.PlaceType
@@ -58,7 +59,8 @@ fun formatTime(duration: Double): String{
 }
 
 fun formatDistance(length: Double): String{
-    if (length >= 1) return "${length}km"
+    val df = DecimalFormat("#.##")
+    if (length >= 1) return "${df.format(length)}km"
     val metre = (length * 1000).toInt()
     return "${metre}m"
 }

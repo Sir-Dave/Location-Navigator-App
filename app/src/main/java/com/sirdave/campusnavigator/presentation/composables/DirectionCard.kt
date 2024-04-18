@@ -41,8 +41,8 @@ fun DirectionCard(
                     painter = painterResource(id = direction.directionIcon),
                     contentDescription = null,
                     modifier = modifier
-                        .height(70.dp)
-                        .width(70.dp)
+                        .height(50.dp)
+                        .width(50.dp)
                 )
                 Text(
                     text = direction.distanceToNextLocation,
@@ -64,7 +64,7 @@ fun DirectionCard(
                 Text(
                     text = direction.timeToNextLocation,
                     fontSize = 12.sp,
-                    color = Color.White,
+                    color = Color.White
                 )
             }
         }

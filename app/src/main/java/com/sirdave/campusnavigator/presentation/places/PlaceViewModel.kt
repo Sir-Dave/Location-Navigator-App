@@ -236,6 +236,10 @@ class PlaceViewModel @Inject constructor(
                     getRoad(startPoint, endPoint, commuteMode = event.commuteMode)
                 }*/
             }
+
+            is PlaceEvent.OnPlaceSelected -> {
+                placeState = placeState.copy(currentPlace = event.place)
+            }
         }
     }
 }

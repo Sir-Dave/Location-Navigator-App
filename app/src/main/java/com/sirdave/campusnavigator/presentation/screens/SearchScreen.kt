@@ -18,7 +18,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.sirdave.campusnavigator.R
 import com.sirdave.campusnavigator.domain.model.DirectionWithIcon
-import com.sirdave.campusnavigator.domain.model.Place
 import com.sirdave.campusnavigator.domain.model.PlaceData
 import com.sirdave.campusnavigator.presentation.composables.*
 import com.sirdave.campusnavigator.presentation.places.PlaceEvent
@@ -54,7 +53,7 @@ fun SearchScreen(
     val scaffoldSheetState = rememberBottomSheetScaffoldState()
     val bottomPadding = padding.calculateBottomPadding() + 40.dp
 
-    var selectedPlace by remember { mutableStateOf<Place?>(null) }
+    val selectedPlace = state.currentPlace
 
     BottomSheetScaffold(
         scaffoldState = scaffoldSheetState,
@@ -67,8 +66,8 @@ fun SearchScreen(
                         state = state,
                         onEvent = onEvent,
                         onViewDetails = { place ->
+                            onEvent(PlaceEvent.OnPlaceSelected(place))
                             currentScreen = BottomSheetContent.Detail
-                            selectedPlace = place
                         }
                     )
                 }
@@ -142,15 +141,15 @@ fun SearchScreen(
                                 startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
                             }
 
-                            val endPoint = GeoPoint(7.4, 3.89)
-
-                            onEvent(
-                                PlaceEvent.GetDirections(
-                                    endPoint.latitude,
-                                    endPoint.longitude,
-                                    state.selectedMode
-                                )
-                            )
+//                            val endPoint = GeoPoint(7.4, 3.89)
+//
+//                            onEvent(
+//                                PlaceEvent.GetDirections(
+//                                    endPoint.latitude,
+//                                    endPoint.longitude,
+//                                    state.selectedMode
+//                                )
+//                            )
                         }
                     },
                     update = { view ->

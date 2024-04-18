@@ -1,11 +1,12 @@
 package com.sirdave.campusnavigator.presentation.composables
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,7 +24,8 @@ fun DirectionCard(
     modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = modifier.padding(horizontal = 8.dp)
+        modifier = modifier
+            .padding(horizontal = 8.dp)
             .fillMaxWidth()
             .height(IntrinsicSize.Min)
     ) {
@@ -38,17 +40,19 @@ fun DirectionCard(
                 Image(
                     painter = painterResource(id = direction.directionIcon),
                     contentDescription = null,
-                    modifier = modifier.height(70.dp).width(70.dp)
+                    modifier = modifier
+                        .height(70.dp)
+                        .width(70.dp)
                 )
                 Text(
                     text = direction.distanceToNextLocation,
                     color = Color.White
                 )
             }
-            Spacer(modifier = modifier.width(16.dp))
 
             Column(
                 verticalArrangement = Arrangement.SpaceEvenly,
+                modifier = modifier.padding(horizontal = 8.dp)
             ) {
                 Text(
                     text = direction.text,
@@ -60,22 +64,77 @@ fun DirectionCard(
                 Text(
                     text = direction.timeToNextLocation,
                     fontSize = 12.sp,
-                    color = Color.White
+                    color = Color.White,
                 )
             }
         }
     }
 }
 
+@Composable
+fun DirectionsToggleCard(
+    directions: List<DirectionWithIcon>,
+    modifier: Modifier = Modifier
+){
+    var currentIndex by remember { mutableStateOf(0) }
+    Row(
+        modifier = modifier
+            .padding(vertical = 8.dp)
+            .height(IntrinsicSize.Min)
+            .fillMaxWidth()
+    ){
+            Column(
+                modifier = modifier
+                    .padding(start = 8.dp)
+                    .fillMaxHeight(),
+                verticalArrangement = Arrangement.Center
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.baseline_keyboard_arrow_left),
+                    contentDescription = null,
+                    tint = if (currentIndex > 0) Color.White else Color.Gray,
+                    modifier = Modifier.clickable {
+                        if (currentIndex > 0) {
+                            currentIndex--
+                        }
+                    }
+                )
+            }
+            DirectionCard(
+                direction = directions[currentIndex],
+                modifier = modifier.weight(1f)
+            )
+
+            Column(
+                modifier = modifier
+                    .padding(end = 8.dp)
+                    .fillMaxHeight(),
+                verticalArrangement = Arrangement.Center
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.baseline_keyboard_arrow_right),
+                    contentDescription = null,
+                    tint = if (currentIndex < directions.size - 1) Color.White else Color.Gray,
+                    modifier = Modifier.clickable {
+                        if (currentIndex < directions.size - 1) {
+                            currentIndex++
+                        }
+                    }
+                )
+            }
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun DirectionCardPreview(){
-    DirectionCard(
-        direction = DirectionWithIcon(
+    val directions = listOf(
+        DirectionWithIcon(
             text = "Move straight ahead towards Queens roundabout Move straight ahead towards Queens roundabout Move straight ahead towards Queens roundabout",
             directionIcon = R.drawable.baseline_roundabout,
             distanceToNextLocation = "200m",
             timeToNextLocation = "30 seconds"
         )
     )
+    DirectionsToggleCard(directions = directions)
 }

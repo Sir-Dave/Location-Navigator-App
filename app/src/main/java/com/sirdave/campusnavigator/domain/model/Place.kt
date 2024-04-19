@@ -10,7 +10,10 @@ enum class PlaceType(val title: String) {
     RESTAURANT("Restaurant"),
     FACULTY("Faculty"),
     LEISURE("Leisure"),
-    SPORT_FACILITY("Sport Facility")
+    SPORT_FACILITY("Sport Facility"),
+    BUILDING("Building"),
+    DEPARTMENT("Department"),
+    OTHER("Other"),
 }
 
 enum class HostelCategory(val title: String) {

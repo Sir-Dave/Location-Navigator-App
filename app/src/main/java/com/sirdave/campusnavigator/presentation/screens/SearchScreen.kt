@@ -3,7 +3,6 @@ package com.sirdave.campusnavigator.presentation.screens
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.graphics.Rect
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.BottomSheetScaffold
@@ -53,8 +52,6 @@ fun SearchScreen(
     val scaffoldSheetState = rememberBottomSheetScaffoldState()
     val bottomPadding = padding.calculateBottomPadding() + 40.dp
 
-    val selectedPlace = state.currentPlace
-
     BottomSheetScaffold(
         scaffoldState = scaffoldSheetState,
         sheetPeekHeight = bottomPadding,
@@ -73,15 +70,13 @@ fun SearchScreen(
                 }
                 
                 BottomSheetContent.Detail -> {
-                    selectedPlace?.let {
-                        DestinationDetail(
-                            place = it,
-                            onViewFullScreen = onViewFullScreen,
-                            onBackClicked = { currentScreen = BottomSheetContent.Search },
-                            onShowMapDirections = {},
-                            onDirect = { currentScreen = BottomSheetContent.CommuteModes }
-                        )
-                    }
+                    DestinationDetail(
+                        state = state,
+                        onViewFullScreen = onViewFullScreen,
+                        onBackClicked = { currentScreen = BottomSheetContent.Search },
+                        onShowMapDirections = {},
+                        onDirect = { currentScreen = BottomSheetContent.CommuteModes }
+                    )
                 }
 
                 BottomSheetContent.CommuteModes -> {
@@ -91,17 +86,24 @@ fun SearchScreen(
                         onWalkSelected = { onEvent(PlaceEvent.OnCommuteModeChanged(OSRMRoadManager.MEAN_BY_FOOT)) },
                         onCarSelected = { onEvent(PlaceEvent.OnCommuteModeChanged(OSRMRoadManager.MEAN_BY_CAR)) },
                         onBikeSelected = { onEvent(PlaceEvent.OnCommuteModeChanged(OSRMRoadManager.MEAN_BY_BIKE)) },
-                        onStartClicked = { currentScreen = BottomSheetContent.SelectedMode }
+                        onStartClicked = {
+                            onEvent(PlaceEvent.GetDirections(state.selectedMode))
+                            currentScreen = BottomSheetContent.SelectedMode
+                            onEvent(PlaceEvent.ToggleRoadDirections(true))
+                        }
                     )
                 }
 
                 BottomSheetContent.SelectedMode -> {
                     SelectedCommuteBar(
                         placeState = state,
-                        onExit = { currentScreen = BottomSheetContent.CommuteModes },
-                        onWalkSelected = { onEvent(PlaceEvent.OnCommuteModeChanged(OSRMRoadManager.MEAN_BY_FOOT)) },
-                        onCarSelected = { onEvent(PlaceEvent.OnCommuteModeChanged(OSRMRoadManager.MEAN_BY_CAR)) },
-                        onBikeSelected = { onEvent(PlaceEvent.OnCommuteModeChanged(OSRMRoadManager.MEAN_BY_BIKE)) }
+                        onExit = {
+                            currentScreen = BottomSheetContent.CommuteModes
+                            onEvent(PlaceEvent.ToggleRoadDirections(false))
+                         },
+                        onWalkSelected = { onEvent(PlaceEvent.GetDirections(OSRMRoadManager.MEAN_BY_FOOT)) },
+                        onCarSelected = { onEvent(PlaceEvent.GetDirections(OSRMRoadManager.MEAN_BY_CAR)) },
+                        onBikeSelected = { onEvent(PlaceEvent.GetDirections(OSRMRoadManager.MEAN_BY_BIKE)) }
                     )
                 }
             }
@@ -140,16 +142,6 @@ fun SearchScreen(
                                 startMarker.position = mapPoint
                                 startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
                             }
-
-//                            val endPoint = GeoPoint(7.4, 3.89)
-//
-//                            onEvent(
-//                                PlaceEvent.GetDirections(
-//                                    endPoint.latitude,
-//                                    endPoint.longitude,
-//                                    state.selectedMode
-//                                )
-//                            )
                         }
                     },
                     update = { view ->
@@ -163,7 +155,7 @@ fun SearchScreen(
 
                     }
                 )
-                if (allDirections.isNotEmpty()){
+                if (allDirections.isNotEmpty() && state.showRoad){
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -172,7 +164,6 @@ fun SearchScreen(
                     ) {
                         DirectionsToggleCard(directions = allDirections)
                     }
-
                 }
             }
 
@@ -191,9 +182,6 @@ private fun getRoadMarkers(
     val startIcon = context.getDrawable(R.drawable.baseline_location)
     val directionIcon = context.getDrawable(R.drawable.baseline_circle)
     val endIcon = context.getDrawable(R.drawable.baseline_location_on)
-
-    Log.d("SearchScreen", "total duration is ${road.mDuration}")
-    Log.d("SearchScreen", "total length is ${road.mLength}")
 
     for (i in road.mNodes.indices) {
         val node = road.mNodes[i]

@@ -215,30 +215,36 @@ class PlaceViewModel @Inject constructor(
                 }
             }
 
-            is PlaceEvent.GetDirections -> {
-                val currentLocation = placeState.lastKnownLocation
-
-                if (currentLocation != null){
-                    val startPoint = GeoPoint(currentLocation.latitude, currentLocation.longitude)
-                    val endPoint = GeoPoint(event.latitude, event.longitude)
-                    getRoad(startPoint, endPoint, event.commuteMode)
-                }
-            }
-
             is PlaceEvent.OnCommuteModeChanged -> {
                 placeState = placeState.copy(selectedMode = event.commuteMode)
-                /*val currentLocation = placeState.lastKnownLocation
-                val endPlace = placeState.currentPlace
+            }
 
-                if (currentLocation != null && endPlace != null){
+            is PlaceEvent.GetDirections -> {
+                placeState = placeState.copy(selectedMode = event.commuteMode)
+                val currentLocation = placeState.lastKnownLocation
+                val currentPlace = placeState.currentPlace
+                val selectedMode = event.commuteMode
+
+                if (currentLocation != null && currentPlace != null){
                     val startPoint = GeoPoint(currentLocation.latitude, currentLocation.longitude)
-                    val endPoint = GeoPoint(endPlace.latitude, endPlace.longitude)
-                    getRoad(startPoint, endPoint, commuteMode = event.commuteMode)
-                }*/
+                    val endPoint = GeoPoint(currentPlace.latitude, currentPlace.longitude)
+                    getRoad(startPoint, endPoint, selectedMode)
+                }
             }
 
             is PlaceEvent.OnPlaceSelected -> {
                 placeState = placeState.copy(currentPlace = event.place)
+                val currentLocation = placeState.lastKnownLocation
+
+                if (currentLocation != null){
+                    val startPoint = GeoPoint(currentLocation.latitude, currentLocation.longitude)
+                    val endPoint = GeoPoint(event.place.latitude, event.place.longitude)
+                    getRoad(startPoint, endPoint, commuteMode = placeState.selectedMode)
+                }
+            }
+
+            is PlaceEvent.ToggleRoadDirections -> {
+                placeState = placeState.copy(showRoad = event.showRoad)
             }
         }
     }

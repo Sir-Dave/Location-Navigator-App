@@ -14,5 +14,6 @@ data class PlaceState(
     val currentPlace: Place? = null,
     val lastKnownLocation: Location? = null,
     val road: Road? = null,
+    val showRoad: Boolean = false,
     val selectedMode: String = OSRMRoadManager.MEAN_BY_CAR
 )

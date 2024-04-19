@@ -151,6 +151,7 @@ fun SearchScreen(
                                 road = r, currentPlace = state.currentPlace?.name)
                             view.overlays.addAll(roadMarkers)
                             view.overlays.add(roadOverlay)
+                            view.invalidate()
                         }
 
                     }

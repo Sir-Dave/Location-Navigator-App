@@ -149,6 +149,8 @@ fun SearchScreen(
                             val roadOverlay = RoadManager.buildRoadOverlay(r)
                             val roadMarkers = getRoadMarkers(context = context, mapView = view,
                                 road = r, currentPlace = state.currentPlace?.name)
+
+                            view.overlays.clear()
                             view.overlays.addAll(roadMarkers)
                             view.overlays.add(roadOverlay)
                             view.invalidate()

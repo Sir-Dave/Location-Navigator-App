@@ -60,7 +60,7 @@ fun DirectionsBar(
             CustomIconButton(
                 onClick = { onWalkSelected() },
                 modifier = Modifier.weight(1f),
-                text = "15 min",
+                text = "",
                 drawable = R.drawable.baseline_directions_walk,
                 buttonColor = if (selectedMode == OSRMRoadManager.MEAN_BY_FOOT) selectedColor else unselectedColor
             )
@@ -70,7 +70,7 @@ fun DirectionsBar(
             CustomIconButton(
                 onClick = { onCarSelected() },
                 modifier = Modifier.weight(1f),
-                text = "8 min",
+                text = "",
                 drawable = R.drawable.baseline_directions_car,
                 buttonColor = if (selectedMode == OSRMRoadManager.MEAN_BY_CAR) selectedColor else unselectedColor
             )
@@ -80,7 +80,7 @@ fun DirectionsBar(
             CustomIconButton(
                 onClick = { onBikeSelected() },
                 modifier = Modifier.weight(1f),
-                text = "6 min",
+                text = "",
                 drawable = R.drawable.baseline_directions_bike,
                 buttonColor = if (selectedMode == OSRMRoadManager.MEAN_BY_BIKE) selectedColor else unselectedColor
             )

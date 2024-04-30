@@ -13,7 +13,7 @@ val mapOfTurns = mapOf(
     "left" to R.drawable.baseline_turn_left,
     "up" to R.drawable.baseline_keyboard_double_arrow_up,
     "down" to R.drawable.baseline_keyboard_double_arrow_down,
-    "roundabout" to R.drawable.baseline_roundabout
+    "roundabout" to R.drawable.round_about
 )
 
 fun LocalDateTime.toFormattedDate(): String{

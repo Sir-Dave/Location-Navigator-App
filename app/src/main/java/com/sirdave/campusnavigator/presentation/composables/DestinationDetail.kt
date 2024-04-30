@@ -29,7 +29,6 @@ fun DestinationDetail(
     state: PlaceState,
     onViewFullScreen: (PlaceData) -> Unit,
     onBackClicked: () -> Unit,
-    onShowMapDirections: () -> Unit,
     onDirect: () -> Unit,
     modifier: Modifier = Modifier
 ){
@@ -115,36 +114,16 @@ fun DestinationDetail(
 
             Spacer(modifier = modifier.height(16.dp))
 
-            Row(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ){
-                CustomIconButton(
-                    onClick = onShowMapDirections,
-                    buttonColor = ButtonDefaults.outlinedButtonColors(
-                        containerColor = Color.LightGray,
-                        contentColor = Color.Black
-                    ),
-                    modifier = Modifier.weight(1f),
-                    text = stringResource(id = R.string.how_to_get_there),
-                    drawable = R.drawable.baseline_menu
-                )
-
-                Spacer(modifier = modifier.width(8.dp))
-
-                CustomIconButton(
-                    onClick = onDirect,
-                    buttonColor = ButtonDefaults.outlinedButtonColors(
-                        containerColor = Color.Black,
-                        contentColor = Color.White
-                    ),
-                    modifier = Modifier.weight(1f),
-                    text = stringResource(id = R.string.direct_me),
-                    drawable = R.drawable.baseline_near_me
-                )
-            }
+            CustomIconButton(
+                onClick = onDirect,
+                buttonColor = ButtonDefaults.outlinedButtonColors(
+                    containerColor = Color.Black,
+                    contentColor = Color.White
+                ),
+                modifier = Modifier.fillMaxWidth(),
+                text = stringResource(id = R.string.direct_me),
+                drawable = R.drawable.baseline_near_me
+            )
         }
     }
     
@@ -159,7 +138,6 @@ fun DetailPreview() {
         state = PlaceState(),
         onViewFullScreen = {},
         onBackClicked = {},
-        onDirect = {},
-        onShowMapDirections = {}
+        onDirect = {}
     )
 }

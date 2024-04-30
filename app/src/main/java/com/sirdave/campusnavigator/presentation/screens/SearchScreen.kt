@@ -74,7 +74,6 @@ fun SearchScreen(
                         state = state,
                         onViewFullScreen = onViewFullScreen,
                         onBackClicked = { currentScreen = BottomSheetContent.Search },
-                        onShowMapDirections = {},
                         onDirect = { currentScreen = BottomSheetContent.CommuteModes }
                     )
                 }
@@ -232,7 +231,7 @@ private fun getDirections(road: Road): List<DirectionWithIcon>{
     }
     val lastDirection = DirectionWithIcon(
         text = "You have reached your destination",
-        directionIcon = R.drawable.baseline_keyboard_double_arrow_down
+        directionIcon = R.drawable.baseline_location_white
     )
     directions.add(lastDirection)
     return directions

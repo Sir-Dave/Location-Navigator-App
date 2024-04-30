@@ -48,7 +48,8 @@ fun Search(
             },
             modifier = modifier
                 .padding(horizontal = 8.dp, vertical = 4.dp)
-                .fillMaxWidth()
+                .fillMaxWidth(),
+            maxLines = 1
         )
         Spacer(modifier = modifier.height(50.dp))
 

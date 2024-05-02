@@ -79,15 +79,15 @@ class MainActivity : ComponentActivity() {
                             BottomNavigationBar(
                                 items = listOf(
                                     BottomNavItem(
-                                        name = "Search",
-                                        route = Screen.SearchScreen.route,
-                                        icon = painterResource(id = R.drawable.baseline_location_searching)
-                                    ),
-
-                                    BottomNavItem(
                                         name = "Explore",
                                         route = Screen.ExploreScreen.route,
                                         icon = painterResource(id = R.drawable.baseline_explore)
+                                    ),
+
+                                    BottomNavItem(
+                                        name = "Search",
+                                        route = Screen.SearchScreen.route,
+                                        icon = painterResource(id = R.drawable.baseline_location_searching)
                                     ),
 
                                     BottomNavItem(

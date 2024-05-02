@@ -35,7 +35,7 @@ fun Navigation(
     ){
         navigation(
             route = Screen.HomeScreen.route,
-            startDestination = Screen.SearchScreen.route
+            startDestination = Screen.ExploreScreen.route
         ){
             composable(Screen.SearchScreen.route){
                 SearchScreen(

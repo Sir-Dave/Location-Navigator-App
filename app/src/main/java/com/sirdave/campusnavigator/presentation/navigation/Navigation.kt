@@ -37,18 +37,6 @@ fun Navigation(
             route = Screen.HomeScreen.route,
             startDestination = Screen.ExploreScreen.route
         ){
-            composable(Screen.SearchScreen.route){
-                SearchScreen(
-                    state = viewModel.placeState,
-                    padding = padding,
-                    onEvent = viewModel::onEvent,
-                    onViewFullScreen = { place ->
-                        navHostController.currentBackStackEntry?.savedStateHandle?.set(PLACE, place)
-                        navHostController.navigate(Screen.DestinationPicturesExpandedScreen.route)
-                    }
-                )
-            }
-
             composable(Screen.ExploreScreen.route){
                 ExploreScreen(
                     state = viewModel.placeState,
@@ -57,10 +45,24 @@ fun Navigation(
                         navHostController.navigate(route)
                     },
                     onEvent = viewModel::onEvent,
+                    onViewPlace = { navHostController.navigate(Screen.SearchScreen.route) },
                     onViewFullScreen = { placeData ->
                         navHostController.currentBackStackEntry?.savedStateHandle?.set(PLACE, placeData)
                         navHostController.navigate(Screen.DestinationPicturesExpandedScreen.route)
                     }
+                )
+            }
+
+            composable(Screen.SearchScreen.route){
+                SearchScreen(
+                    state = viewModel.placeState,
+                    padding = padding,
+                    onEvent = viewModel::onEvent,
+                    onViewFullScreen = { place ->
+                        navHostController.currentBackStackEntry?.savedStateHandle?.set(PLACE, place)
+                        navHostController.navigate(Screen.DestinationPicturesExpandedScreen.route)
+                    },
+                    onBackClicked = { navHostController.popBackStack() }
                 )
             }
 
@@ -81,6 +83,7 @@ fun Navigation(
                         navHostController.popBackStack()
                     },
                     onEvent = viewModel::onEvent,
+                    onViewPlace = { navHostController.navigate(Screen.SearchScreen.route) },
                     onViewFullScreen = { placeData ->
                         navHostController.currentBackStackEntry?.savedStateHandle?.set(PLACE, placeData)
                         navHostController.navigate(Screen.DestinationPicturesExpandedScreen.route)

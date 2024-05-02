@@ -42,15 +42,17 @@ fun SearchScreen(
     padding: PaddingValues,
     onEvent: (PlaceEvent) -> Unit,
     onViewFullScreen: (PlaceData) -> Unit,
+    onBackClicked: () -> Unit
 ){
     val context = LocalContext.current
     val road = state.road
     var allDirections = emptyList<DirectionWithIcon>()
     road?.let { allDirections = getDirections(it) }
 
-    var currentScreen by remember { mutableStateOf(BottomSheetContent.Search) }
+    var currentScreen by remember { mutableStateOf(BottomSheetContent.Detail) }
     val scaffoldSheetState = rememberBottomSheetScaffoldState()
     val bottomPadding = padding.calculateBottomPadding() + 40.dp
+    val coroutineScope = rememberCoroutineScope()
 
     BottomSheetScaffold(
         scaffoldState = scaffoldSheetState,
@@ -58,22 +60,13 @@ fun SearchScreen(
         modifier = Modifier.padding(padding),
         sheetContent = {
             when (currentScreen){
-                BottomSheetContent.Search -> {
-                    Search(
-                        state = state,
-                        onEvent = onEvent,
-                        onViewDetails = { place ->
-                            onEvent(PlaceEvent.OnPlaceSelected(place))
-                            currentScreen = BottomSheetContent.Detail
-                        }
-                    )
-                }
-                
                 BottomSheetContent.Detail -> {
+                    coroutineScope.launch { scaffoldSheetState.bottomSheetState.expand() }
+
                     DestinationDetail(
                         state = state,
                         onViewFullScreen = onViewFullScreen,
-                        onBackClicked = { currentScreen = BottomSheetContent.Search },
+                        onBackClicked =  onBackClicked,
                         onDirect = { currentScreen = BottomSheetContent.CommuteModes }
                     )
                 }
@@ -106,7 +99,7 @@ fun SearchScreen(
                     )
                 }
             }
-            
+
         },
     ){
         Column(
@@ -241,5 +234,5 @@ private fun getSharedPreferences(context: Context) =
     context.getSharedPreferences(context.getString(R.string.app_name), MODE_PRIVATE)
 
 enum class BottomSheetContent{
-    Search, Detail, CommuteModes, SelectedMode
+    Detail, CommuteModes, SelectedMode
 }

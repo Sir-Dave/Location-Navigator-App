@@ -28,6 +28,7 @@ fun ExploreScreen(
     state: PlaceState,
     onNavigateToDetails: (String) -> Unit,
     onEvent: (PlaceEvent) -> Unit,
+    onViewPlace: () -> Unit,
     onViewFullScreen: (PlaceData) -> Unit,
     modifier: Modifier = Modifier,
 ){
@@ -46,8 +47,8 @@ fun ExploreScreen(
         )
 
         OutlinedTextField(
-            value = "",
-            onValueChange = {},
+            value = state.searchQuery,
+            onValueChange = { onEvent(PlaceEvent.OnSearchQueryChanged(it)) },
             leadingIcon = {
                 Icon(imageVector = Icons.Default.Search, contentDescription = null)
             },
@@ -59,7 +60,9 @@ fun ExploreScreen(
             },
             modifier = modifier
                 .padding(vertical = 4.dp)
-                .fillMaxWidth()
+                .fillMaxWidth(),
+
+            maxLines = 1,
         )
 
         Spacer(modifier = modifier.width(8.dp))
@@ -85,6 +88,8 @@ fun ExploreScreen(
         SegmentedPlaces(
             places = places,
             onNavigateToDetails = onNavigateToDetails,
+            onEvent = onEvent,
+            onViewPlace = onViewPlace,
             onViewFullScreen = onViewFullScreen
         )
     }
@@ -98,6 +103,7 @@ fun ExplorePreview() {
         state = PlaceState(),
         onNavigateToDetails = {},
         onEvent = {},
+        onViewPlace = {},
         onViewFullScreen = {}
     )
 }

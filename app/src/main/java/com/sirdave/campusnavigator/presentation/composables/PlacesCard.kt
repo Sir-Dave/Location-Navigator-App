@@ -2,6 +2,7 @@ package com.sirdave.campusnavigator.presentation.composables
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -49,13 +50,16 @@ fun PopularPlace(
 fun PlaceCard(
     place: Place,
     imageIndex: Int,
+    onSelectPlace: (Place) -> Unit,
     onViewFullScreen: (PlaceData) -> Unit,
     modifier: Modifier = Modifier){
     Column(
         modifier = modifier.padding(8.dp)
             .height(IntrinsicSize.Min)
     ) {
-        Row{
+        Row(
+            modifier = modifier.clickable { onSelectPlace(place) }
+        ){
             ImageCardSmall(
                 place = place,
                 imageIndex = imageIndex,
@@ -94,5 +98,5 @@ fun PlacesPreview() {
 @Preview(showBackground = true)
 @Composable
 fun PlacesCardPreview() {
-    PlaceCard(place = places[0], 0, onViewFullScreen = {})
+    PlaceCard(place = places[0], 0, onSelectPlace = {}, onViewFullScreen = {})
 }

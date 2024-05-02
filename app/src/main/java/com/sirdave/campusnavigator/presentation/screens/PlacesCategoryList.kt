@@ -4,7 +4,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -31,6 +30,7 @@ fun PlaceCategoryList(
     title: String,
     onBackClick: () -> Unit,
     onEvent: (PlaceEvent) -> Unit,
+    onViewPlace: () -> Unit,
     onViewFullScreen: (PlaceData) -> Unit,
     modifier: Modifier = Modifier) {
 
@@ -62,6 +62,10 @@ fun PlaceCategoryList(
                 PlaceCard(
                     place = place,
                     imageIndex = 0,
+                    onSelectPlace = {
+                        onEvent(PlaceEvent.OnPlaceSelected(place))
+                        onViewPlace()
+                    },
                     onViewFullScreen = {
                         val placeData = PlaceData(place, index)
                         onViewFullScreen(placeData)
@@ -82,6 +86,7 @@ fun PlaceDetailPreview(){
         title = stringResource(id = R.string.halls_of_residence),
         onEvent = {},
         onBackClick = {},
-        onViewFullScreen = {}
+        onViewFullScreen = {},
+        onViewPlace = {}
     )
 }

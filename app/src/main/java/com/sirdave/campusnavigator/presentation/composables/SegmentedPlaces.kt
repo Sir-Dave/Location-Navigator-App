@@ -17,11 +17,14 @@ import androidx.compose.ui.unit.dp
 import com.sirdave.campusnavigator.R
 import com.sirdave.campusnavigator.domain.model.Place
 import com.sirdave.campusnavigator.domain.model.PlaceData
+import com.sirdave.campusnavigator.presentation.places.PlaceEvent
 
 @Composable
 fun SegmentedPlaces(
     places: List<Place>,
     onNavigateToDetails: (String) -> Unit,
+    onEvent: (PlaceEvent) -> Unit,
+    onViewPlace: () -> Unit,
     onViewFullScreen: (PlaceData) -> Unit,
     modifier: Modifier = Modifier
 ){
@@ -42,6 +45,10 @@ fun SegmentedPlaces(
                 PlaceCard(
                     place = place,
                     imageIndex = 0,
+                    onSelectPlace = {
+                        onEvent(PlaceEvent.OnPlaceSelected(place))
+                        onViewPlace()
+                    },
                     onViewFullScreen = onViewFullScreen
                 )
             }

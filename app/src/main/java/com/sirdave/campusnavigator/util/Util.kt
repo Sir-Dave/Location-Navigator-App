@@ -3,7 +3,6 @@ package com.sirdave.campusnavigator.util
 import android.icu.text.DecimalFormat
 import com.sirdave.campusnavigator.R
 import com.sirdave.campusnavigator.domain.model.DirectionWithIcon
-import com.sirdave.campusnavigator.domain.model.PlaceType
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -28,14 +27,6 @@ fun String.toLocalDateTime(): LocalDateTime{
     return LocalDateTime.parse(this, formatter)
 }
 
-fun getPlaceType(title: String): String{
-    val allPlaceTypes = PlaceType.values()
-    for (place in allPlaceTypes){
-        if (title == place.title)
-            return place.name
-    }
-    return ""
-}
 fun formatTime(duration: Double): String{
     var remainingSeconds = duration.toInt()
     val hours = remainingSeconds / 3600

@@ -33,7 +33,7 @@ fun SegmentedPlaces(
             .fillMaxSize()
             .padding(vertical = 20.dp)
     ){
-        val groupedPlaces = places.groupBy { it.placeType }
+        val groupedPlaces = places.groupBy { it.category }
         groupedPlaces.forEach{(title, places) ->
             item {
                 PlaceHeader(

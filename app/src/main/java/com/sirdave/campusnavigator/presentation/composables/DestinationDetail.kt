@@ -102,7 +102,7 @@ fun DestinationDetail(
                         }
                     )
                     Text(
-                        text = selectedPlace.placeType,
+                        text = selectedPlace.category,
                         modifier = modifier.constrainAs(directionText){
                             bottom.linkTo(parent.bottom)
                             start.linkTo(directionIcon.end)

@@ -10,9 +10,8 @@ data class PlaceEntity (
     var alias: String,
     var longitude: Double,
     var latitude: Double,
-    var placeType: String,
     var createdAt: String,
     var imageUrls: List<String>,
-    var category: String?,
+    var category: String,
     var updatedAt: String?
 )

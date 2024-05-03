@@ -20,8 +20,8 @@ interface NavigatorDao{
     @Query("SELECT * FROM placeentity WHERE name LIKE '%' || :name || '%'")
     suspend fun getPlacesByName(name: String): List<PlaceEntity>
 
-    @Query("SELECT * FROM placeentity WHERE name LIKE '%' || :type || '%'")
-    suspend fun getPlacesByType(type: String): List<PlaceEntity>
+    @Query("SELECT * FROM placeentity WHERE category LIKE '%' || :category || '%'")
+    suspend fun getPlacesByCategory(category: String): List<PlaceEntity>
 
     @Query("SELECT * FROM placeentity")
     suspend fun getAllPlaces(): List<PlaceEntity>

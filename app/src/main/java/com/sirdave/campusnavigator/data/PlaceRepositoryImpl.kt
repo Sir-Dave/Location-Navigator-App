@@ -60,7 +60,7 @@ class PlaceRepositoryImpl @Inject constructor(
         category: String,
         fetchFromRemote: Boolean
     ): Flow<Resource<List<Place>>> {
-        val localResult = dao.getPlacesByType(category)
+        val localResult = dao.getPlacesByCategory(category)
         val shouldLoadFromCache = localResult.isNotEmpty() && !fetchFromRemote
 
         if (shouldLoadFromCache) {

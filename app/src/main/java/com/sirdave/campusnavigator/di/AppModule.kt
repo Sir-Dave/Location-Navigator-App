@@ -1,5 +1,8 @@
 package com.sirdave.campusnavigator.di
 
+import android.app.Application
+import androidx.room.Room
+import com.sirdave.campusnavigator.data.local.NavigatorDatabase
 import com.sirdave.campusnavigator.data.remote.Api
 import dagger.Module
 import dagger.Provides
@@ -37,5 +40,15 @@ object AppModule {
         return OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
             .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideDatabase(app: Application): NavigatorDatabase{
+        return Room.databaseBuilder(
+            app,
+            NavigatorDatabase::class.java,
+            "navigator_db"
+        ).fallbackToDestructiveMigration().build()
     }
 }

@@ -3,6 +3,7 @@ package com.sirdave.campusnavigator.di
 import android.content.Context
 import com.sirdave.campusnavigator.data.OSMRepository
 import com.sirdave.campusnavigator.data.PlaceRepositoryImpl
+import com.sirdave.campusnavigator.data.local.NavigatorDatabase
 import com.sirdave.campusnavigator.data.remote.Api
 import com.sirdave.campusnavigator.domain.repository.PlaceRepository
 import dagger.Module
@@ -20,9 +21,10 @@ object RepositoryModule {
     @Singleton
     fun providePlaceRepository(
         @ApplicationContext context: Context,
-        api: Api
+        api: Api,
+        db: NavigatorDatabase
     ): PlaceRepository {
-        return PlaceRepositoryImpl(context, api)
+        return PlaceRepositoryImpl(context, api, db)
     }
 
     @Provides

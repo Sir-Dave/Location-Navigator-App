@@ -49,7 +49,7 @@ class PlaceViewModel @Inject constructor(
         }
     }
 
-    private fun searchPlacesByName(name: String, fetchFromRemote: Boolean = true) {
+    private fun searchPlacesByName(name: String, fetchFromRemote: Boolean = false) {
         placeState = placeState.copy(isLoading = true)
         viewModelScope.launch {
             val placeResult = repository.searchPlacesByName(name, fetchFromRemote)
@@ -79,7 +79,7 @@ class PlaceViewModel @Inject constructor(
         }
     }
 
-    private fun searchPlacesByType(type: String, fetchFromRemote: Boolean = true) {
+    private fun searchPlacesByType(type: String, fetchFromRemote: Boolean = false) {
         placeState = placeState.copy(isLoading = true)
         viewModelScope.launch {
             val placeResult = repository.searchPlacesByType(type = type, fetchFromRemote)
@@ -109,7 +109,7 @@ class PlaceViewModel @Inject constructor(
         }
     }
 
-    private fun getAllPlaces(fetchFromRemote: Boolean = true) {
+    private fun getAllPlaces(fetchFromRemote: Boolean = false) {
         placeState = placeState.copy(isLoading = true)
         viewModelScope.launch {
             val placeResult = repository.findAllPlaces(fetchFromRemote)
@@ -139,7 +139,7 @@ class PlaceViewModel @Inject constructor(
         }
     }
 
-    private fun findPlaceById(id: Long, fetchFromRemote: Boolean = true) {
+    private fun findPlaceById(id: Long, fetchFromRemote: Boolean = false) {
         placeState = placeState.copy(isLoading = true)
         viewModelScope.launch {
             val placeResult = repository.findPlaceById(id, fetchFromRemote)

@@ -11,8 +11,8 @@ interface PlaceRepository {
         fetchFromRemote: Boolean
     ): Flow<Resource<List<Place>>>
 
-    suspend fun searchPlacesByType(
-        type: String,
+    suspend fun searchPlacesByCategory(
+        category: String,
         fetchFromRemote: Boolean
     ): Flow<Resource<List<Place>>>
 

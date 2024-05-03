@@ -19,8 +19,8 @@ interface Api {
     ): Response<List<PlaceDto>>
 
     @GET("api/v1/places")
-    suspend fun getPlacesByType(
-        @Query("type") type: String
+    suspend fun getPlacesByCategory(
+        @Query("category") category: String
     ): Response<List<PlaceDto>>
 
     @GET("api/v1/places")

@@ -79,10 +79,10 @@ class PlaceViewModel @Inject constructor(
         }
     }
 
-    private fun searchPlacesByType(type: String, fetchFromRemote: Boolean = false) {
+    private fun searchPlacesByCategory(category: String, fetchFromRemote: Boolean = false) {
         placeState = placeState.copy(isLoading = true)
         viewModelScope.launch {
-            val placeResult = repository.searchPlacesByType(type = type, fetchFromRemote)
+            val placeResult = repository.searchPlacesByCategory(category = category, fetchFromRemote)
             placeResult.collect {
                 withContext(Dispatchers.Main) {
                     when (val result = it) {
@@ -203,7 +203,7 @@ class PlaceViewModel @Inject constructor(
             }
 
             is PlaceEvent.SearchPlacesByType -> {
-                searchPlacesByType(type = event.type)
+                searchPlacesByCategory(category = event.type)
             }
 
             is PlaceEvent.OnSearchQueryChanged -> {

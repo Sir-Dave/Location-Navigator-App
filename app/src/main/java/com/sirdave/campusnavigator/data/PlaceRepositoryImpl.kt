@@ -56,21 +56,21 @@ class PlaceRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun searchPlacesByType(
-        type: String,
+    override suspend fun searchPlacesByCategory(
+        category: String,
         fetchFromRemote: Boolean
     ): Flow<Resource<List<Place>>> {
-        val localResult = dao.getPlacesByType(type)
+        val localResult = dao.getPlacesByType(category)
         val shouldLoadFromCache = localResult.isNotEmpty() && !fetchFromRemote
 
         if (shouldLoadFromCache) {
-            Log.d(TAG, "fetching places with type $type from DB")
+            Log.d(TAG, "fetching places with category $category from DB")
             return flow {
                 emit(Resource.Success(data = localResult.map { it.toPlace() } ))
             }
         }
-        Log.d(TAG, "fetching places with type $type from server")
-        val request = apiRequestFlow(context) { api.getPlacesByType(type)}
+        Log.d(TAG, "fetching places with category $category from server")
+        val request = apiRequestFlow(context) { api.getPlacesByCategory(category)}
         return request.map { dtoResource ->
             when (dtoResource){
                 is Resource.Success -> {

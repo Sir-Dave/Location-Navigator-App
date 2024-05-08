@@ -127,7 +127,7 @@ fun SearchScreen(
                             val currentLocation = state.lastKnownLocation
                             currentLocation?.let {location ->
                                 val mapPoint = GeoPoint(location.latitude, location.longitude)
-                                controller.setZoom(6.0)
+                                controller.setZoom(18.0)
                                 controller.animateTo(mapPoint)
 
                                 val startMarker = Marker(this)
